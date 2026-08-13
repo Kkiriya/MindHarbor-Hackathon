@@ -1,0 +1,63 @@
+@startsalt
+title MindHarbor - Tableau de bord personnel
+
+{
+ header
+ ---
+
+  <b>Bonjour Utilisateur</b>
+  Voici un aperçu de ta semaine.
+
+  --
+
+  {+
+    <b>Aujourd'hui</b>
+    {
+      <b>Journal d'aujourd'hui</b>
+      <&circle-x> Pas encore rempli
+      Prends quelques minutes pour faire le point.
+      [ Remplir mon journal ]
+
+    }
+    |
+    {
+      <b>Suggestion du jour</b>
+      <&heart> Faire une marche de 15 minutes
+      Une courte pause peut aider à réduire le stress.
+      [ Voir la suggestion ]
+    }
+  }
+
+  {+
+  <b>Cette semaine</b>
+    {
+      <b>Résumé</b>
+      Humeur moyenne | <b>3,4 / 5</b>
+      Tendance       | <&arrow-top> En amélioration
+      Entrées        | 5 jours sur 7
+      [ Voir mes statistiques ]
+
+    }
+    |
+    {
+      <b>Prochains événements de groupe</b>
+      15 août, 18 h | Marche au parc
+      18 août, 19 h | Groupe de discussion
+      [ Voir tous les événements ]
+    }
+  }
+
+  {+
+    <b>Notifications récentes</b>
+    <&bell> Nouveau message dans le groupe de discussion
+    <&calendar> Rappel : Marche au parc demain
+    <&check> Ton journal d'hier a été enregistré
+    [ Voir toutes les notifications ]
+  }
+
+  --
+
+  Footer
+}
+
+@endsalt
