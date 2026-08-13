@@ -1,0 +1,67 @@
+@startsalt
+title MindHarbor - Wellness Journal - Wireframe
+
+{
+Header
+--
+<b>Journal quotidien de bien-être</b>
+<b>13 aout 2026</b>
+{
+  <b>Humeur générale</b>    | <b>Énergie</b>            | <b>Sommeil</b>    | <b>Stress</b>
+    () 1 - Très mal         | () 1 - Épuisé             | () 1 - Très peu   | () 1 - Très peu stressé
+    () 2 - Mal              | () 2 - Fatigué            | () 2 - Peu        | () 2 - Peu stressé
+    (X) 3 - Correct         | (X) 3 - Moyenne           | (X) 3 - Moyen     | (X) 3 - Stressé
+    () 4 - Bien             | () 4 - Énergique          | () 4 - Bien       | () 4 - Très stressé
+    () 5 - Très bien        | () 5 - Plein d'énergie    | () 5 - Très bien  | () 5 - Anxieux
+}
+  --
+
+  {
+    <b>Activités du jour</b>
+    [] Exercice     | [] Activités sociales | [] Travail
+    [] Méditation   | [] Loisirs             | [] Études
+    [] Lecture      | [] Repos               | [] Autre
+  }
+
+  --
+
+  <b>Événements marquants</b>
+  {SI
+    Écris tes événements ici...
+    .
+    .
+    .
+    .
+    "                                            "
+}
+
+--
+{
+    <b>Gratitude (facultatif)</b>
+    {SI
+        Je suis reconnaissant pour...
+        .
+        .
+        .
+        "                                            "
+    }
+}
+--
+  [ Enregistrer ]
+--
+<b>Entrées antérieures</b>
+
+{
+  <b>Date</b>       | <b>Humeur</b> | <b>Énergie</b> | <b>Sommeil</b> | <b>Stress</b> | <b>Action</b>
+  12 août 2026      | 3 / 5         | 2 / 5          | 4 / 5          | 4 / 5         | [ Consulter ]
+  11 août 2026      | 4 / 5         | 3 / 5          | 3 / 5          | 2 / 5         | [ Consulter ]
+  10 août 2026      | 2 / 5         | 2 / 5          | 3 / 5          | 5 / 5         | [ Consulter ]
+}
+{
+[ < Précédent ] | Page 1 de 3 | [ Suivant > ]
+}
+  --
+  Footer
+}
+
+@endsalt
