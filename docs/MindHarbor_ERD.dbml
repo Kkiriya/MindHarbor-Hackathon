@@ -166,8 +166,9 @@ Table Post {
 
 // Comment Table
 Table Comment {
-  userId uuid [primary key, ref: > User.userId]
-  postId uuid [primary key, ref: > Post.postId]
+  commentId uuid [primary key]
+  userId uuid [ref: > User.userId]
+  postId uuid [ref: > Post.postId]
 
   comment String [not null] // the actual comment
 
