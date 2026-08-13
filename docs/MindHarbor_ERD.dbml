@@ -5,6 +5,7 @@ Table User {
 
 Table JournalEntry {
   journalId uuid [primary key, unique, not null]
+  userId uuid [ref: > User.userId, not null]
 
   generalMood int [check: `generalMood 1 >= and generalMood <= 5`, not null]
   energyLevel int [check: `energyLevel 1 >= and energyLevel <= 5`, not null]
@@ -12,6 +13,11 @@ Table JournalEntry {
   stessLevel int [check: `stessLevel 1 >= and stessLevel <= 5`, not null]
   keyEvents String [not null]
   dailyGratitude String
+  date date [default: `today()`, not null]
+
+  indexes {
+    (userId, date) [unique]
+  }
 }
 
 Table Activity {

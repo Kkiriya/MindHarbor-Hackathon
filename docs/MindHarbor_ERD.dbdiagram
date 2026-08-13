@@ -117,6 +117,21 @@
         "secondSchemaName": "public",
         "secondRelation": "*",
         "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "userId"
+        ],
+        "firstTableName": "User",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "userId"
+        ],
+        "secondTableName": "JournalEntry",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
       }
     ]
   },
