@@ -1,0 +1,54 @@
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 16px;
+    background-color: rgb(23 50 77 / 0.95);
+    backdrop-filter: blur(20px);
+}
+
+.content{
+    display: flex;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav ul {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav a {
+    color: var(--color-surface);
+    text-decoration: none;
+
+    font-weight: 500;
+
+    border-bottom: 2px solid transparent;
+
+    transition:
+            color 0.2s ease,
+            border-color 0.2s ease;
+
+    /*The size will be x% of the viewport*/
+    font-size: 3.1vw;
+}
+
+/*Limits the font-size*/
+@media screen and (min-width: 601px){
+    .nav a {
+        font-size: 30px;
+    }
+}
+
+.nav a:hover,
+.nav a:focus-visible {
+    color: var(--color-accent-soft);
+    border-bottom-color: var(--color-accent);
+}
