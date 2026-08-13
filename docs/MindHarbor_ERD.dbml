@@ -1,10 +1,10 @@
 Table User {
-  userId uuid [primary key, unique]
+  userId uuid [primary key]
 
 }
 
 Table JournalEntry {
-  journalId uuid [primary key, unique, not null]
+  journalId uuid [primary key, not null]
   userId uuid [ref: > User.userId, not null]
 
   generalMood int [check: `generalMood 1 >= and generalMood <= 5`, not null]
@@ -22,23 +22,46 @@ Table JournalEntry {
 }
 
 Table Activity {
-  activityId uuid [primary key, unique]
+  activityId uuid [primary key]
   name String [not null, unique]
   desc String [not null]
 }
 
 // Junction table between JournalEntry & Activity
 Table JournalEntriesActvities {
-    journalId uuid [ref: > JournalEntry.journalId]
-    activityId uuid [ref: > Activity.activityId]
+    journalId uuid [primary key, ref: > JournalEntry.journalId]
+    activityId uuid [primary key, ref: > Activity.activityId]
 }
 
 Table Resource {
-  resourceId uuid [primary key, unique]
+  resourceId uuid [primary key]
+  name String [not null, unique]
+  category ResourceCategoryEnum [not null]
+  type ResourceTypeEnum [not null]
+  duration float [not null]
+  level int [check: `level >= 0`, not null]
 }
 
+Enum ResourceCategoryEnum {
+    ANXIETY
+    SLEEP
+    RELATIONSHIP
+    WORK
+    GRIEF
+}
+
+Enum ResourceTypeEnum {
+    ARTICLES
+    EXERCICES
+    PRACTICAL_SHEET
+    AUDIO_LINK
+    VIDEO_LINK
+}
+
+// Junction Table between User and Resource to add a resource to favorites
 Table Favorite {
-  favoriteId uuid [primary key, unique]
+    userId uuid [primary key, ref: > User.userId]
+    resource uuid [primary key, ref: > Resource.resourceId]
 }
 
 Table Group {

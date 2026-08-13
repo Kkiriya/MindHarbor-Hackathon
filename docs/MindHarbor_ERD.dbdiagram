@@ -75,8 +75,8 @@
       {
         "name": "RefreshToken",
         "schemaName": "public",
-        "x": 297.2111328125,
-        "y": 612
+        "x": 302.5520419034091,
+        "y": 699.5909090909092
       },
       {
         "name": "JournalEntriesActvities",
@@ -129,6 +129,36 @@
           "userId"
         ],
         "secondTableName": "JournalEntry",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "userId"
+        ],
+        "firstTableName": "User",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "userId"
+        ],
+        "secondTableName": "Favorite",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "resourceId"
+        ],
+        "firstTableName": "Resource",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "resource"
+        ],
+        "secondTableName": "Favorite",
         "secondSchemaName": "public",
         "secondRelation": "*",
         "checkPoints": []
