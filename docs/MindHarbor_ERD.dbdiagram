@@ -198,6 +198,231 @@
         "secondSchemaName": "public",
         "secondRelation": "*",
         "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "userId"
+        ],
+        "firstTableName": "User",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "userId"
+        ],
+        "secondTableName": "GroupMember",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "groupId"
+        ],
+        "firstTableName": "Group",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "groupId"
+        ],
+        "secondTableName": "GroupMember",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "userId"
+        ],
+        "firstTableName": "User",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "senderId"
+        ],
+        "secondTableName": "Message",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "userId"
+        ],
+        "firstTableName": "User",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "receiverId"
+        ],
+        "secondTableName": "Message",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "userId"
+        ],
+        "firstTableName": "User",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "receiveId"
+        ],
+        "secondTableName": "Message",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "userId"
+        ],
+        "firstTableName": "User",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "receivId"
+        ],
+        "secondTableName": "Message",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "userId"
+        ],
+        "firstTableName": "User",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "receiId"
+        ],
+        "secondTableName": "Message",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "userId"
+        ],
+        "firstTableName": "User",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "receId"
+        ],
+        "secondTableName": "Message",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "userId"
+        ],
+        "firstTableName": "User",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "recId"
+        ],
+        "secondTableName": "Message",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "userId"
+        ],
+        "firstTableName": "User",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "reciId"
+        ],
+        "secondTableName": "Message",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "userId"
+        ],
+        "firstTableName": "User",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "recipId"
+        ],
+        "secondTableName": "Message",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "userId"
+        ],
+        "firstTableName": "User",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "recipiId"
+        ],
+        "secondTableName": "Message",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "userId"
+        ],
+        "firstTableName": "User",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "recipieId"
+        ],
+        "secondTableName": "Message",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "userId"
+        ],
+        "firstTableName": "User",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "recipienId"
+        ],
+        "secondTableName": "Message",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "userId"
+        ],
+        "firstTableName": "User",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "recipientId"
+        ],
+        "secondTableName": "Message",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
       }
     ]
   },

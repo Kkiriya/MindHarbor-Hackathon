@@ -1,5 +1,6 @@
 Table User {
   userId uuid [primary key]
+  privateMessageLevel UserPrivateMessageLevelEnum [default: `MEMBRES_DE_MES_GROUPES`, not null]
 
 }
 
@@ -112,8 +113,10 @@ Enum GroupRequestStatusEnum {
     REFUSEE
 }
 
+// junction table between User and groups
 Table GroupMember {
-  groupMemberId uuid [primary key, unique]
+    userId uuid [primary key ,ref: > User.userId]
+    groupId uuid [primary key, ref: > Group.groupId]
 }
 
 Table Post {
@@ -124,8 +127,27 @@ Table Comment {
   commentId uuid [primary key, unique]
 }
 
+Enum UserPrivateMessageLevelEnum {
+    PERSONNE // does not accept private messages
+    MEMBRES_DE_MES_GROUPES // only accepts message from shared group members
+    TOUT_LE_MONDE // accepts message from anyone
+}
+
 Table Message {
   messageId uuid [primary key, unique]
+  senderId uuid [ref: > User.userId]
+  recipientId uuid [ref: > User.userId]
+
+  message String [not null]
+  readReceipt MessageReadReceipt [not null]
+
+  createdAt datetime [default: `now()`]
+  updatedAt datetime //essentially readAt but to keep it consistant with the rest of the db renamed to updatedAt
+}
+
+Enum MessageReadReceiptEnum {
+    SENT
+    READ
 }
 
 Table Report {
