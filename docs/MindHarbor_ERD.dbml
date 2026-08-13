@@ -13,9 +13,11 @@ Table JournalEntry {
   stessLevel int [check: `stessLevel 1 >= and stessLevel <= 5`, not null]
   keyEvents String [not null]
   dailyGratitude String
+
   createdAt date [default: `today()`, not null]
   updatedAt datetime [default: `now()`]
 
+  // a journal entry can only be made once a day
   indexes {
     (userId, createdAt) [unique]
   }
@@ -25,6 +27,8 @@ Table Activity {
   activityId uuid [primary key]
   name String [not null, unique]
   desc String [not null]
+
+  createdAt datetime [default: `now()`]
 }
 
 // Junction table between JournalEntry & Activity
@@ -35,11 +39,15 @@ Table JournalEntriesActvities {
 
 Table Resource {
   resourceId uuid [primary key]
+
   name String [not null, unique]
   category ResourceCategoryEnum [not null]
   type ResourceTypeEnum [not null]
   duration float [not null]
   level int [check: `level >= 0`, not null]
+
+  createdAt datetime [default: `now()`]
+  updatedAt datetime [default: `now()`]
 }
 
 Enum ResourceCategoryEnum {
@@ -65,7 +73,43 @@ Table Favorite {
 }
 
 Table Group {
-  groupId uuid [primary key, unique]
+  groupId uuid [primary key]
+
+  name String [not null]
+  theme String [not null]
+  desc String [not null]
+  rules String [not null]
+  visibility GroupVisibilityEnum [not null]
+
+  createdAt datetime [default: `now()`]
+  updatedAt datetime [default: `now()`]
+}
+
+Enum GroupVisibilityEnum {
+    PUBLIC
+    PRIVE
+}
+
+Table GroupMembershipRequest {
+    groupMemberShipId uuid [primary key]
+    groupId uuid [ref: > Group.groupId]
+    userId uuid [ref: > User.userId]
+
+    status GroupRequestStatusEnum
+
+    createdAt datetime [default: `now()`]
+    updatedAt datetime [default: `now()`]
+
+    // a user cannot have multiple request for the same group at the same time
+    indexes {
+        (groupId, userId) [unique] // this syntax prevents a user from creating multiple request at the same however if the request has been refused a user wont be able to request again; will need to be fixed in the actual DB schema
+    }
+}
+
+Enum GroupRequestStatusEnum {
+    EN_ATTENTE
+    ACCEPTEE
+    REFUSEE
 }
 
 Table GroupMember {

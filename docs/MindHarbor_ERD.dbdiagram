@@ -83,6 +83,12 @@
         "schemaName": "public",
         "x": 12,
         "y": 1036
+      },
+      {
+        "name": "GroupMembershipRequest",
+        "schemaName": "public",
+        "x": 12,
+        "y": 1182
       }
     ],
     "tableGroupCollapseStates": [],
@@ -159,6 +165,36 @@
           "resource"
         ],
         "secondTableName": "Favorite",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "groupId"
+        ],
+        "firstTableName": "Group",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "groupId"
+        ],
+        "secondTableName": "GroupMembershipRequest",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "userId"
+        ],
+        "firstTableName": "User",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "userId"
+        ],
+        "secondTableName": "GroupMembershipRequest",
         "secondSchemaName": "public",
         "secondRelation": "*",
         "checkPoints": []
