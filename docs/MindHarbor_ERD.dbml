@@ -13,15 +13,18 @@ Table JournalEntry {
   stessLevel int [check: `stessLevel 1 >= and stessLevel <= 5`, not null]
   keyEvents String [not null]
   dailyGratitude String
-  date date [default: `today()`, not null]
+  createdAt date [default: `today()`, not null]
+  updatedAt datetime [default: `now()`]
 
   indexes {
-    (userId, date) [unique]
+    (userId, createdAt) [unique]
   }
 }
 
 Table Activity {
   activityId uuid [primary key, unique]
+  name String [not null, unique]
+  desc String [not null]
 }
 
 // Junction table between JournalEntry & Activity
