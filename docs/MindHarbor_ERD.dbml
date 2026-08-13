@@ -1,7 +1,34 @@
 Table User {
   userId uuid [primary key]
-  privateMessageLevel UserPrivateMessageLevelEnum [default: `MEMBRES_DE_MES_GROUPES`, not null]
 
+  email String [not null]
+  password String [not null] // hashed in the actual DB
+  role UserRole [default: `USER`] // determines user permissions
+
+  username String [not null]
+  firstName String [not null]
+  lastName String [not null]
+  avatarPictureUrl String
+  bio String
+
+  // Determines who can view account info outside of the avatar & username
+  visibilityLevel UserVisibilityLevel [default: `PRIVE`]
+    // Determine who can send private message
+  privateMessageLevel UserPrivateMessageLevel [default: `MEMBRES_DE_MES_GROUPES`, not null]
+
+  createdAt datetime [default: `now()`]
+  updatedAt datetime
+}
+
+Enum UserVisibilityLevel {
+    PUBLIC
+    GROUPES_SEULEMENT
+    PRIVE
+}
+
+Enum UserRole {
+    ADMINISTRATOR
+    USER
 }
 
 Table JournalEntry {
@@ -30,10 +57,11 @@ Table Activity {
   desc String [not null]
 
   createdAt datetime [default: `now()`]
+  updatedAt datetime [default: `now()`]
 }
 
-// Junction table between JournalEntry & Activity
-Table JournalEntriesActvities {
+// N-N junction table between JournalEntry and Activity
+Table JournalActivity {
     journalId uuid [primary key, ref: > JournalEntry.journalId]
     activityId uuid [primary key, ref: > Activity.activityId]
 }
@@ -42,8 +70,8 @@ Table Resource {
   resourceId uuid [primary key]
 
   name String [not null, unique]
-  category ResourceCategoryEnum [not null]
-  type ResourceTypeEnum [not null]
+  category ResourceCategory [not null]
+  type ResourceType [not null]
   duration float [not null]
   level int [check: `level >= 0`, not null]
 
@@ -51,7 +79,7 @@ Table Resource {
   updatedAt datetime [default: `now()`]
 }
 
-Enum ResourceCategoryEnum {
+Enum ResourceCategory {
     ANXIETY
     SLEEP
     RELATIONSHIP
@@ -59,18 +87,19 @@ Enum ResourceCategoryEnum {
     GRIEF
 }
 
-Enum ResourceTypeEnum {
-    ARTICLES
-    EXERCICES
-    PRACTICAL_SHEET
-    AUDIO_LINK
-    VIDEO_LINK
+Enum ResourceType {
+    ARTICLE
+    EXERCICE
+    FICHE_PRATIQUE
+    LIEN_EXTERNE
 }
 
-// Junction Table between User and Resource to add a resource to favorites
+// N-N junction table between User and Resource, to track a users favorite resource
 Table Favorite {
     userId uuid [primary key, ref: > User.userId]
     resource uuid [primary key, ref: > Resource.resourceId]
+
+    createdAt datetime [default: `now()`]
 }
 
 Table Group {
@@ -80,54 +109,64 @@ Table Group {
   theme String [not null]
   desc String [not null]
   rules String [not null]
-  visibility GroupVisibilityEnum [not null]
+  visibility GroupVisibility [not null]
 
   createdAt datetime [default: `now()`]
   updatedAt datetime [default: `now()`]
 }
 
-Enum GroupVisibilityEnum {
+Enum GroupVisibility {
     PUBLIC
     PRIVE
 }
 
-Table GroupMembershipRequest {
-    groupMemberShipId uuid [primary key]
-    groupId uuid [ref: > Group.groupId]
-    userId uuid [ref: > User.userId]
-
-    status GroupRequestStatusEnum
-
-    createdAt datetime [default: `now()`]
-    updatedAt datetime [default: `now()`]
-
-    // a user cannot have multiple request for the same group at the same time
-    indexes {
-        (groupId, userId) [unique] // this syntax prevents a user from creating multiple request at the same however if the request has been refused a user wont be able to request again; will need to be fixed in the actual DB schema
-    }
-}
-
-Enum GroupRequestStatusEnum {
+Enum GroupRequestStatus {
     EN_ATTENTE
     ACCEPTEE
     REFUSEE
 }
 
+Enum GroupRole {
+    MODERATEUR
+    MEMBRE
+    NON_MEMBRE
+}
+
 // junction table between User and groups
 Table GroupMember {
-    userId uuid [primary key ,ref: > User.userId]
+    userId uuid [primary key, ref: > User.userId]
     groupId uuid [primary key, ref: > Group.groupId]
+
+    role GroupRole [default: `NON_MEMBRE`]
+    requestStatus GroupRequestStatus [default: `EN_ATTENTE`]
+
+    createdAt datetime [default: `now()`]
+    updatedAt datetime
 }
 
 Table Post {
-  postId uuid [primary key, unique]
+  postId uuid [primary key]
+  userId uuid [ref: > User.userId]
+  groupId uuid [ref: > Group.groupId]
+
+  title String [not null] // title for the post
+  body String [not null] // body for the post
+
+  createdAt datetime [default: `now()`]
+  updatedAt datetime
 }
 
 Table Comment {
-  commentId uuid [primary key, unique]
+  userId uuid [primary key, ref: > User.userId]
+  postId uuid [primary key, ref: > Post.postId]
+
+  comment String [not null] // the actual comment
+
+  createdAt datetime [default: `now()`]
+  updatedAt datetime
 }
 
-Enum UserPrivateMessageLevelEnum {
+Enum UserPrivateMessageLevel {
     PERSONNE // does not accept private messages
     MEMBRES_DE_MES_GROUPES // only accepts message from shared group members
     TOUT_LE_MONDE // accepts message from anyone
@@ -145,15 +184,43 @@ Table Message {
   updatedAt datetime //essentially readAt but to keep it consistant with the rest of the db renamed to updatedAt
 }
 
-Enum MessageReadReceiptEnum {
+Enum MessageReadReceipt {
     SENT
     READ
 }
 
 Table Report {
- reportId uuid [primary key, unique]
+ postId uuid [primary key, ref: > Post.postId]
+ userId uuid [primary key, ref: > User.userId] // user of the user creating the report
+
+ category ReportCategory [not null]
+ status  ReportStatus [default: `EN_ATTENTE`]
+
+ createdAt datetime [default: `now()`]
+ updatedAt datetime
 }
 
+Enum ReportCategory {
+    INAPPROPRIE
+    SPAM
+    INQUIETANT
+}
+
+Enum ReportStatus {
+    EN_ATTENTE
+    EN_COURS_DE_REVISION
+    RESOLUE
+    REJETEE
+}
+
+
 Table RefreshToken {
- refreshTokenId uuid [primary key, unique]
+ refreshTokenId uuid [primary key]
+
+ userId uuid [ref: > User.userId]
+
+ tokenHash varchar
+ expiresAt datetime
+ createdAt datetime [default: `now()`]
+ revokedAt datetime
 }

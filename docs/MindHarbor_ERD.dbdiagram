@@ -9,91 +9,100 @@
       {
         "name": "User",
         "schemaName": "public",
-        "x": 263.46064453125,
-        "y": 12
+        "x": 16,
+        "y": 584
       },
       {
         "name": "JournalEntry",
         "schemaName": "public",
-        "x": 327.66083984375,
-        "y": 762
+        "x": 736,
+        "y": 16
       },
       {
         "name": "Activity",
         "schemaName": "public",
-        "x": 12,
-        "y": 312
+        "x": 16,
+        "y": 16
+      },
+      {
+        "name": "JournalActivity",
+        "schemaName": "public",
+        "x": 1392,
+        "y": 16
       },
       {
         "name": "Resource",
         "schemaName": "public",
-        "x": 291.32685546875,
-        "y": 462
+        "x": 16,
+        "y": 248
       },
       {
         "name": "Favorite",
         "schemaName": "public",
-        "x": 283.6271484375,
-        "y": 312
+        "x": 736,
+        "y": 408
       },
       {
         "name": "Group",
         "schemaName": "public",
-        "x": 12,
-        "y": 162
+        "x": 16,
+        "y": 1080
       },
       {
         "name": "GroupMember",
         "schemaName": "public",
-        "x": 12,
-        "y": 762
+        "x": 736,
+        "y": 1128
       },
       {
         "name": "Post",
         "schemaName": "public",
-        "x": 12,
-        "y": 12
+        "x": 736,
+        "y": 1400
       },
       {
         "name": "Comment",
         "schemaName": "public",
-        "x": 12,
-        "y": 612
+        "x": 1392,
+        "y": 152
       },
       {
         "name": "Message",
         "schemaName": "public",
-        "x": 12,
-        "y": 462
+        "x": 736,
+        "y": 552
       },
       {
         "name": "Report",
         "schemaName": "public",
-        "x": 273.14716796875,
-        "y": 162
+        "x": 1392,
+        "y": 392
       },
       {
         "name": "RefreshToken",
         "schemaName": "public",
-        "x": 302.5520419034091,
-        "y": 699.5909090909092
-      },
-      {
-        "name": "JournalEntriesActvities",
-        "schemaName": "public",
-        "x": 12,
-        "y": 1036
-      },
-      {
-        "name": "GroupMembershipRequest",
-        "schemaName": "public",
-        "x": 12,
-        "y": 1182
+        "x": 736,
+        "y": 856
       }
     ],
     "tableGroupCollapseStates": [],
     "stickyNoteLayouts": [],
     "referencePaths": [
+      {
+        "firstFieldNames": [
+          "userId"
+        ],
+        "firstTableName": "User",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "userId"
+        ],
+        "secondTableName": "JournalEntry",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
       {
         "firstFieldNames": [
           "journalId"
@@ -104,7 +113,7 @@
         "secondFieldNames": [
           "journalId"
         ],
-        "secondTableName": "JournalEntriesActvities",
+        "secondTableName": "JournalActivity",
         "secondSchemaName": "public",
         "secondRelation": "*",
         "checkPoints": []
@@ -119,22 +128,7 @@
         "secondFieldNames": [
           "activityId"
         ],
-        "secondTableName": "JournalEntriesActvities",
-        "secondSchemaName": "public",
-        "secondRelation": "*",
-        "checkPoints": []
-      },
-      {
-        "firstFieldNames": [
-          "userId"
-        ],
-        "firstTableName": "User",
-        "firstSchemaName": "public",
-        "firstRelation": "1",
-        "secondFieldNames": [
-          "userId"
-        ],
-        "secondTableName": "JournalEntry",
+        "secondTableName": "JournalActivity",
         "secondSchemaName": "public",
         "secondRelation": "*",
         "checkPoints": []
@@ -171,36 +165,6 @@
       },
       {
         "firstFieldNames": [
-          "groupId"
-        ],
-        "firstTableName": "Group",
-        "firstSchemaName": "public",
-        "firstRelation": "1",
-        "secondFieldNames": [
-          "groupId"
-        ],
-        "secondTableName": "GroupMembershipRequest",
-        "secondSchemaName": "public",
-        "secondRelation": "*",
-        "checkPoints": []
-      },
-      {
-        "firstFieldNames": [
-          "userId"
-        ],
-        "firstTableName": "User",
-        "firstSchemaName": "public",
-        "firstRelation": "1",
-        "secondFieldNames": [
-          "userId"
-        ],
-        "secondTableName": "GroupMembershipRequest",
-        "secondSchemaName": "public",
-        "secondRelation": "*",
-        "checkPoints": []
-      },
-      {
-        "firstFieldNames": [
           "userId"
         ],
         "firstTableName": "User",
@@ -225,6 +189,66 @@
           "groupId"
         ],
         "secondTableName": "GroupMember",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "userId"
+        ],
+        "firstTableName": "User",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "userId"
+        ],
+        "secondTableName": "Post",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "groupId"
+        ],
+        "firstTableName": "Group",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "groupId"
+        ],
+        "secondTableName": "Post",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "userId"
+        ],
+        "firstTableName": "User",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "userId"
+        ],
+        "secondTableName": "Comment",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "postId"
+        ],
+        "firstTableName": "Post",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "postId"
+        ],
+        "secondTableName": "Comment",
         "secondSchemaName": "public",
         "secondRelation": "*",
         "checkPoints": []
@@ -252,174 +276,54 @@
         "firstSchemaName": "public",
         "firstRelation": "1",
         "secondFieldNames": [
-          "receiverId"
-        ],
-        "secondTableName": "Message",
-        "secondSchemaName": "public",
-        "secondRelation": "*",
-        "checkPoints": []
-      },
-      {
-        "firstFieldNames": [
-          "userId"
-        ],
-        "firstTableName": "User",
-        "firstSchemaName": "public",
-        "firstRelation": "1",
-        "secondFieldNames": [
-          "receiveId"
-        ],
-        "secondTableName": "Message",
-        "secondSchemaName": "public",
-        "secondRelation": "*",
-        "checkPoints": []
-      },
-      {
-        "firstFieldNames": [
-          "userId"
-        ],
-        "firstTableName": "User",
-        "firstSchemaName": "public",
-        "firstRelation": "1",
-        "secondFieldNames": [
-          "receivId"
-        ],
-        "secondTableName": "Message",
-        "secondSchemaName": "public",
-        "secondRelation": "*",
-        "checkPoints": []
-      },
-      {
-        "firstFieldNames": [
-          "userId"
-        ],
-        "firstTableName": "User",
-        "firstSchemaName": "public",
-        "firstRelation": "1",
-        "secondFieldNames": [
-          "receiId"
-        ],
-        "secondTableName": "Message",
-        "secondSchemaName": "public",
-        "secondRelation": "*",
-        "checkPoints": []
-      },
-      {
-        "firstFieldNames": [
-          "userId"
-        ],
-        "firstTableName": "User",
-        "firstSchemaName": "public",
-        "firstRelation": "1",
-        "secondFieldNames": [
-          "receId"
-        ],
-        "secondTableName": "Message",
-        "secondSchemaName": "public",
-        "secondRelation": "*",
-        "checkPoints": []
-      },
-      {
-        "firstFieldNames": [
-          "userId"
-        ],
-        "firstTableName": "User",
-        "firstSchemaName": "public",
-        "firstRelation": "1",
-        "secondFieldNames": [
-          "recId"
-        ],
-        "secondTableName": "Message",
-        "secondSchemaName": "public",
-        "secondRelation": "*",
-        "checkPoints": []
-      },
-      {
-        "firstFieldNames": [
-          "userId"
-        ],
-        "firstTableName": "User",
-        "firstSchemaName": "public",
-        "firstRelation": "1",
-        "secondFieldNames": [
-          "reciId"
-        ],
-        "secondTableName": "Message",
-        "secondSchemaName": "public",
-        "secondRelation": "*",
-        "checkPoints": []
-      },
-      {
-        "firstFieldNames": [
-          "userId"
-        ],
-        "firstTableName": "User",
-        "firstSchemaName": "public",
-        "firstRelation": "1",
-        "secondFieldNames": [
-          "recipId"
-        ],
-        "secondTableName": "Message",
-        "secondSchemaName": "public",
-        "secondRelation": "*",
-        "checkPoints": []
-      },
-      {
-        "firstFieldNames": [
-          "userId"
-        ],
-        "firstTableName": "User",
-        "firstSchemaName": "public",
-        "firstRelation": "1",
-        "secondFieldNames": [
-          "recipiId"
-        ],
-        "secondTableName": "Message",
-        "secondSchemaName": "public",
-        "secondRelation": "*",
-        "checkPoints": []
-      },
-      {
-        "firstFieldNames": [
-          "userId"
-        ],
-        "firstTableName": "User",
-        "firstSchemaName": "public",
-        "firstRelation": "1",
-        "secondFieldNames": [
-          "recipieId"
-        ],
-        "secondTableName": "Message",
-        "secondSchemaName": "public",
-        "secondRelation": "*",
-        "checkPoints": []
-      },
-      {
-        "firstFieldNames": [
-          "userId"
-        ],
-        "firstTableName": "User",
-        "firstSchemaName": "public",
-        "firstRelation": "1",
-        "secondFieldNames": [
-          "recipienId"
-        ],
-        "secondTableName": "Message",
-        "secondSchemaName": "public",
-        "secondRelation": "*",
-        "checkPoints": []
-      },
-      {
-        "firstFieldNames": [
-          "userId"
-        ],
-        "firstTableName": "User",
-        "firstSchemaName": "public",
-        "firstRelation": "1",
-        "secondFieldNames": [
           "recipientId"
         ],
         "secondTableName": "Message",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "postId"
+        ],
+        "firstTableName": "Post",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "postId"
+        ],
+        "secondTableName": "Report",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "userId"
+        ],
+        "firstTableName": "User",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "userId"
+        ],
+        "secondTableName": "Report",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "userId"
+        ],
+        "firstTableName": "User",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "userId"
+        ],
+        "secondTableName": "RefreshToken",
         "secondSchemaName": "public",
         "secondRelation": "*",
         "checkPoints": []
