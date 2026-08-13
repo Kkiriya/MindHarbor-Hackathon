@@ -1,0 +1,124 @@
+{
+  "version": "2.0.0",
+  "darkMode": true,
+  "gridEnabling": false,
+  "currentViewName": null,
+  "defaultView": {
+    "detailLevel": "All",
+    "tablePositions": [
+      {
+        "name": "User",
+        "schemaName": "public",
+        "x": 263.46064453125,
+        "y": 12
+      },
+      {
+        "name": "JournalEntry",
+        "schemaName": "public",
+        "x": 327.66083984375,
+        "y": 762
+      },
+      {
+        "name": "Activity",
+        "schemaName": "public",
+        "x": 12,
+        "y": 312
+      },
+      {
+        "name": "Resource",
+        "schemaName": "public",
+        "x": 291.32685546875,
+        "y": 462
+      },
+      {
+        "name": "Favorite",
+        "schemaName": "public",
+        "x": 283.6271484375,
+        "y": 312
+      },
+      {
+        "name": "Group",
+        "schemaName": "public",
+        "x": 12,
+        "y": 162
+      },
+      {
+        "name": "GroupMember",
+        "schemaName": "public",
+        "x": 12,
+        "y": 762
+      },
+      {
+        "name": "Post",
+        "schemaName": "public",
+        "x": 12,
+        "y": 12
+      },
+      {
+        "name": "Comment",
+        "schemaName": "public",
+        "x": 12,
+        "y": 612
+      },
+      {
+        "name": "Message",
+        "schemaName": "public",
+        "x": 12,
+        "y": 462
+      },
+      {
+        "name": "Report",
+        "schemaName": "public",
+        "x": 273.14716796875,
+        "y": 162
+      },
+      {
+        "name": "RefreshToken",
+        "schemaName": "public",
+        "x": 297.2111328125,
+        "y": 612
+      },
+      {
+        "name": "JournalEntriesActvities",
+        "schemaName": "public",
+        "x": 12,
+        "y": 1036
+      }
+    ],
+    "tableGroupCollapseStates": [],
+    "stickyNoteLayouts": [],
+    "referencePaths": [
+      {
+        "firstFieldNames": [
+          "journalId"
+        ],
+        "firstTableName": "JournalEntry",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "journalId"
+        ],
+        "secondTableName": "JournalEntriesActvities",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "activityId"
+        ],
+        "firstTableName": "Activity",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "activityId"
+        ],
+        "secondTableName": "JournalEntriesActvities",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      }
+    ]
+  },
+  "views": {}
+}

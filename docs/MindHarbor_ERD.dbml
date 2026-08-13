@@ -1,0 +1,61 @@
+Table User {
+  userId uuid [primary key, unique]
+
+}
+
+Table JournalEntry {
+  journalId uuid [primary key, unique, not null]
+
+  generalMood int [check: `generalMood 1 >= and generalMood <= 5`, not null]
+  energyLevel int [check: `energyLevel 1 >= and energyLevel <= 5`, not null]
+  sleepQuality int [check: `sleepQuality 1 >= and sleepQuality <= 5`, not null]
+  stessLevel int [check: `stessLevel 1 >= and stessLevel <= 5`, not null]
+  keyEvents String [not null]
+  dailyGratitude String
+}
+
+Table Activity {
+  activityId uuid [primary key, unique]
+}
+
+// Junction table between JournalEntry & Activity
+Table JournalEntriesActvities {
+    journalId uuid [ref: > JournalEntry.journalId]
+    activityId uuid [ref: > Activity.activityId]
+}
+
+Table Resource {
+  resourceId uuid [primary key, unique]
+}
+
+Table Favorite {
+  favoriteId uuid [primary key, unique]
+}
+
+Table Group {
+  groupId uuid [primary key, unique]
+}
+
+Table GroupMember {
+  groupMemberId uuid [primary key, unique]
+}
+
+Table Post {
+  postId uuid [primary key, unique]
+}
+
+Table Comment {
+  commentId uuid [primary key, unique]
+}
+
+Table Message {
+  messageId uuid [primary key, unique]
+}
+
+Table Report {
+ reportId uuid [primary key, unique]
+}
+
+Table RefreshToken {
+ refreshTokenId uuid [primary key, unique]
+}
