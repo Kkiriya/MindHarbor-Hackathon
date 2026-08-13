@@ -7,15 +7,15 @@
 > 4. Déposez le **même fichier** sur Teams, dans le devoir prévu, **avant le dimanche 16 août 2026, 23 h 59**.
 > 5. Un seul dépôt par équipe : c'est le capitaine qui remet.
 
-**Cours :** Service Web — Groupe 25604 — Session Été 2026
-**Équipe :** <nom de l'équipe>
-**Date de remise :** <AAAA-MM-JJ HH:MM>
+- **Cours :** Service Web — Groupe 25604 — Session Été 2026
+- **Équipe :** Jean-Simon Cyr et Émile Valade
+- **Date de remise :** 2026-08-16 23h59
 
 ---
 
 ## 1. Dépôt GitHub
 
-- **URL (public) :** <https://github.com/xxx/yyy>
+- **URL (public) :** <https://github.com/Kkiriya/MindHarbor-Hackathon>
 - **Commit final à corriger :** <hash complet du commit>
 - **Branche :** main
 - [ ] Vérifié en navigation privée : le dépôt est bien **PUBLIC**.
@@ -24,16 +24,13 @@
 
 ## 2. Membres de l'équipe
 
-| # | Prénom | Nom | Courriel | Compte GitHub |
-|---|--------|-----|----------|---------------|
-| 1 | <prénom> | <nom> | <courriel> | <pseudo> |
-| 2 | <prénom> | <nom> | <courriel> | <pseudo> |
-| 3 | <prénom> | <nom> | <courriel> | <pseudo> |
-| 4 | <prénom> | <nom> | <courriel> | <pseudo> |
-| 5 | <prénom> | <nom> | <courriel> | <pseudo> |
-| 6 | <prénom> | <nom> | <courriel> | <pseudo> |
+| # | Prénom   | Nom | Courriel          | Compte GitHub |
+|---|----------|-----|-------------------|---------------|
+| 1 | Jean-Simon | Cyr | jsimcyr@gmail.com | Jaska28       |
+| 2 | Émile | Valade | e.valade@proton.me        | Kkiriya      |
 
-**Capitaine :** <prénom nom>
+
+**Capitaine :** Aucun
 
 ---
 
