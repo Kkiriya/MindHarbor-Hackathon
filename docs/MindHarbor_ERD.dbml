@@ -1,3 +1,26 @@
+// === USER MODEL === //
+
+// Enum for user roles
+Enum UserRole {
+    ADMINISTRATOR // system administrator for data collection and overall moderation
+    USER // regular user
+}
+
+// Enum for user visibilty
+Enum UserVisibilityLevel {
+    PUBLIC // anyone can see the full profile
+    GROUPES_SEULEMENT // only group members can see the full profile
+    PRIVE // other users can only see avatar, and username
+}
+
+// Enum for user private message level
+Enum UserPrivateMessageLevel {
+    PERSONNE // does not accept private messages
+    MEMBRES_DE_MES_GROUPES // only accepts message from shared group members
+    TOUT_LE_MONDE // accepts message from anyone
+}
+
+// User Table
 Table User {
   userId uuid [primary key]
 
@@ -20,17 +43,9 @@ Table User {
   updatedAt datetime
 }
 
-Enum UserVisibilityLevel {
-    PUBLIC
-    GROUPES_SEULEMENT
-    PRIVE
-}
+// === JOURNAL ENTRY MODEL === //
 
-Enum UserRole {
-    ADMINISTRATOR
-    USER
-}
-
+// JournalEntry Table
 Table JournalEntry {
   journalId uuid [primary key, not null]
   userId uuid [ref: > User.userId, not null]
@@ -45,12 +60,15 @@ Table JournalEntry {
   createdAt date [default: `today()`, not null]
   updatedAt datetime [default: `now()`]
 
-  // a journal entry can only be made once a day
+  // unicity constraint that prevents multiple daily entry
   indexes {
     (userId, createdAt) [unique]
   }
 }
 
+// === ACTIVITY MODEL === //
+
+// Activity Table
 Table Activity {
   activityId uuid [primary key]
   name String [not null, unique]
@@ -60,12 +78,26 @@ Table Activity {
   updatedAt datetime [default: `now()`]
 }
 
-// N-N junction table between JournalEntry and Activity
-Table JournalActivity {
-    journalId uuid [primary key, ref: > JournalEntry.journalId]
-    activityId uuid [primary key, ref: > Activity.activityId]
+// === RESOURCE MODEL === //
+
+// Enum for resource category
+Enum ResourceCategory {
+    ANXIETY
+    SLEEP
+    RELATIONSHIP
+    WORK
+    GRIEF
 }
 
+// Enum for resource type
+Enum ResourceType {
+    ARTICLE
+    EXERCICE
+    FICHE_PRATIQUE
+    LIEN_EXTERNE
+}
+
+// Resource Table
 Table Resource {
   resourceId uuid [primary key]
 
@@ -79,29 +111,29 @@ Table Resource {
   updatedAt datetime [default: `now()`]
 }
 
-Enum ResourceCategory {
-    ANXIETY
-    SLEEP
-    RELATIONSHIP
-    WORK
-    GRIEF
+// === GROUP MODEL === //
+
+// Enum for Group Visibility
+Enum GroupVisibility {
+    PUBLIC
+    PRIVE
 }
 
-Enum ResourceType {
-    ARTICLE
-    EXERCICE
-    FICHE_PRATIQUE
-    LIEN_EXTERNE
+// Enum for Group Member Junction Table
+Enum GroupRequestStatus {
+    EN_ATTENTE
+    ACCEPTEE
+    REFUSEE
 }
 
-// N-N junction table between User and Resource, to track a users favorite resource
-Table Favorite {
-    userId uuid [primary key, ref: > User.userId]
-    resource uuid [primary key, ref: > Resource.resourceId]
-
-    createdAt datetime [default: `now()`]
+// Enum for Group Member Junction Table
+Enum GroupRole {
+    MODERATEUR
+    MEMBRE
+    NON_MEMBRE
 }
 
+// Group Table
 Table Group {
   groupId uuid [primary key]
 
@@ -115,35 +147,9 @@ Table Group {
   updatedAt datetime [default: `now()`]
 }
 
-Enum GroupVisibility {
-    PUBLIC
-    PRIVE
-}
+// === POST MODEL === //
 
-Enum GroupRequestStatus {
-    EN_ATTENTE
-    ACCEPTEE
-    REFUSEE
-}
-
-Enum GroupRole {
-    MODERATEUR
-    MEMBRE
-    NON_MEMBRE
-}
-
-// junction table between User and groups
-Table GroupMember {
-    userId uuid [primary key, ref: > User.userId]
-    groupId uuid [primary key, ref: > Group.groupId]
-
-    role GroupRole [default: `NON_MEMBRE`]
-    requestStatus GroupRequestStatus [default: `EN_ATTENTE`]
-
-    createdAt datetime [default: `now()`]
-    updatedAt datetime
-}
-
+// Post Table
 Table Post {
   postId uuid [primary key]
   userId uuid [ref: > User.userId]
@@ -156,6 +162,9 @@ Table Post {
   updatedAt datetime
 }
 
+// === COMMENT MODEL === //
+
+// Comment Table
 Table Comment {
   userId uuid [primary key, ref: > User.userId]
   postId uuid [primary key, ref: > Post.postId]
@@ -166,12 +175,15 @@ Table Comment {
   updatedAt datetime
 }
 
-Enum UserPrivateMessageLevel {
-    PERSONNE // does not accept private messages
-    MEMBRES_DE_MES_GROUPES // only accepts message from shared group members
-    TOUT_LE_MONDE // accepts message from anyone
+// === MESSAGE MODEL === //
+
+// Enum for messages read receipt
+Enum MessageReadReceipt {
+    SENT
+    READ
 }
 
+// Message Table
 Table Message {
   messageId uuid [primary key, unique]
   senderId uuid [ref: > User.userId]
@@ -184,11 +196,24 @@ Table Message {
   updatedAt datetime //essentially readAt but to keep it consistant with the rest of the db renamed to updatedAt
 }
 
-Enum MessageReadReceipt {
-    SENT
-    READ
+// === REPORT MODEL === //
+
+// Enum for report category
+Enum ReportCategory {
+    INAPPROPRIE
+    SPAM
+    INQUIETANT
 }
 
+// Enum for report status
+Enum ReportStatus {
+    EN_ATTENTE
+    EN_COURS_DE_REVISION
+    RESOLUE
+    REJETEE
+}
+
+// Report Table
 Table Report {
  postId uuid [primary key, ref: > Post.postId]
  userId uuid [primary key, ref: > User.userId] // user of the user creating the report
@@ -200,20 +225,9 @@ Table Report {
  updatedAt datetime
 }
 
-Enum ReportCategory {
-    INAPPROPRIE
-    SPAM
-    INQUIETANT
-}
+// === REFRESH TOKEN MODEL === //
 
-Enum ReportStatus {
-    EN_ATTENTE
-    EN_COURS_DE_REVISION
-    RESOLUE
-    REJETEE
-}
-
-
+// RefreshToken Table
 Table RefreshToken {
  refreshTokenId uuid [primary key]
 
@@ -223,4 +237,32 @@ Table RefreshToken {
  expiresAt datetime
  createdAt datetime [default: `now()`]
  revokedAt datetime
+}
+
+// === JUNCTION TABLES === //
+
+// N-N junction table between JournalEntry and Activity
+Table JournalActivity {
+    journalId uuid [primary key, ref: > JournalEntry.journalId]
+    activityId uuid [primary key, ref: > Activity.activityId]
+}
+
+// N-N junction table between User and Resource, to track a users favorite resource
+Table Favorite {
+    userId uuid [primary key, ref: > User.userId]
+    resource uuid [primary key, ref: > Resource.resourceId]
+
+    createdAt datetime [default: `now()`]
+}
+
+// junction table between User and groups
+Table GroupMember {
+    userId uuid [primary key, ref: > User.userId]
+    groupId uuid [primary key, ref: > Group.groupId]
+
+    role GroupRole [default: `NON_MEMBRE`]
+    requestStatus GroupRequestStatus [default: `EN_ATTENTE`]
+
+    createdAt datetime [default: `now()`]
+    updatedAt datetime
 }
