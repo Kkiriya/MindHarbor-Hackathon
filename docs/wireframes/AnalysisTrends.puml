@@ -1,0 +1,82 @@
+@startsalt
+title MindHarbor - Analyse et tendances
+
+{
+  Header
+  ---
+    {
+        <b>Mes analyses et tendances</b>
+        Comprendre l'évolution de ton bien-être au fil du temps.
+        Données calculées par le serveur | Dernière mise à jour : aujourd'hui à 18 h
+    }
+
+  {+
+    <b>Période analysée</b> | (X) 7 jours | () 30 jours | () 90 jours
+  }
+
+  --
+
+  {+
+    <b>Évolution des indicateurs</b>
+    {
+        [ Humeur ] | [ Énergie ] | [ Sommeil ] | [ Anxiété ]
+    }
+
+    {
+      5
+      4
+      3
+      2
+      1
+      ^Y axis/|X axis ->| Lun | Mar | Mer | Jeu | Ven | Sam | Dim
+    }
+    Tendance de l'humeur : <&arrow-top> légère hausse
+  }
+
+  --
+
+  {+
+    {
+      <b>Moyennes par jour de la semaine</b>
+      Jour      | Humeur | Énergie | Sommeil | Anxiété
+      Lundi     | 2,6/5  | 2,4/5   | 3,1/5   | 4,0/5
+      Mardi     | 3,2/5  | 3,0/5   | 3,5/5   | 3,1/5
+      Mercredi  | 3,4/5  | 3,3/5   | 3,7/5   | 2,9/5
+      Jeudi     | 3,5/5  | 3,2/5   | 3,6/5   | 2,8/5
+      Vendredi  | 3,8/5  | 3,6/5   | 3,8/5   | 2,5/5
+      Samedi    | 4,1/5  | 3,9/5   | 4,2/5   | 2,1/5
+      Dimanche  | 3,9/5  | 3,5/5   | 4,0/5   | 2,3/5
+    }
+    |
+    {
+      <b>Activité et indicateur</b>
+      Activité   | ^Méditation^
+      Indicateur | ^Anxiété^
+      --
+      Jours avec méditation    | <b>2,1 / 5</b> | 8 jours
+      Jours sans méditation    | <b>3,0 / 5</b> | 13 jours
+      Différence               | <b>-30 %</b>
+      [ Comparer ]
+    }
+  }
+
+  --
+
+  <b>Observations personnalisées</b>
+
+  {+
+    <&lightbulb> <b>Anxiété et méditation</b>
+    Les jours où vous notez l'activité méditation, votre anxiété est en moyenne 30 % plus basse.
+    Comparaison basée sur 8 jours avec méditation et 13 jours sans méditation.
+  }
+
+  {+
+    <&lightbulb> <b>Les lundis sont plus difficiles</b>
+    Votre humeur du lundi est en moyenne 18 % plus basse que votre moyenne hebdomadaire.
+    Observation basée sur 6 lundis enregistrés.
+  }
+  ---
+  Footer
+}
+
+@endsalt

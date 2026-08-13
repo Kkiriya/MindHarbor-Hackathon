@@ -1,0 +1,23 @@
+:root {
+    --color-background: #F5F7FA;
+    --color-surface: #FFFFFF;
+
+    --color-text: #18202A;
+
+    --color-primary: #17324D;
+    --color-primary-hover: #234A70;
+
+    --color-accent: #168C8C;
+    --color-accent-hover: #117272;
+
+    --color-accent-soft: #E7F4F4;
+    --color-secondary-soft: #F0ECF8;
+
+    --color-border: #DCE3E9;
+
+    --h1-font-size: 48px;
+    --h2-font-size: 38px;
+
+    --p-font-size: 24px;
+    --link-font-size: 24px;
+}

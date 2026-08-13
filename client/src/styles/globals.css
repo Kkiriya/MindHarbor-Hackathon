@@ -1,0 +1,25 @@
+@import './variables.css';
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-family: Arial, Helvetica, sans-serif;
+
+    /* So the footer will be always bottom of the pages.*/
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+/* So the footer will be always bottom of the pages.*/
+html, body {
+    height: 100%;
+}
+/* So the footer will always stay at the bottom of the pages. */
+.pageContent {
+    flex: 1;
+}
