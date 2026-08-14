@@ -58,8 +58,11 @@ model User {
   groupMembers   GroupMember[]
   posts          Post[]
   comments       Comment[]
-  messages       Message[]
-  messages       Message[]
+  reports        Report[]
+  refreshTokens  RefreshToken[]
+  favorites      Favorite[]
+  sentMsg        Message[]      @relation("SentMsg")
+  receivedMsg    Message[]      @relation("ReceivedMsg")
 }
 
 // === RESOURCE MODEL === //
@@ -91,8 +94,9 @@ model Resource {
   duration Float
   level    Int
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime? @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime?  @updatedAt
+  favorites Favorite[]
 }
 
 // === ACTIVITY MODEL === //
@@ -219,6 +223,7 @@ model Post {
   group Group @relation(fields: [groupId], references: [groupId])
 
   comments Comment[]
+  reports  Report[]
 }
 
 // === COMMENT MODEL === //
@@ -313,4 +318,17 @@ model RefreshToken {
   updatedAt DateTime? @updatedAt
 
   user User @relation(fields: [userId], references: [userId])
+}
+
+// === N-N JUNCTION TABLE BETWEEN USER AND RESOURCE === /
+model Favorite {
+  UserId     String @db.Uuid
+  resourceId String @db.Uuid
+
+  createdAt DateTime @default(now())
+
+  user     User     @relation(fields: [UserId], references: [userId])
+  resource Resource @relation(fields: [resourceId], references: [resourceId])
+
+  @@id([UserId, resourceId])
 }
