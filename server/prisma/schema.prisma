@@ -137,3 +137,39 @@ model JournalActivity {
 
   @@id([journalId, activityId])
 }
+
+// === GROUP MODEL === //
+
+// Enum for Group Visibility
+enum GroupVisibility {
+  PUBLIC
+  PRIVE
+}
+
+// Enum for Group Member Junction Table
+enum GroupRequestStatus {
+  EN_ATTENTE
+  ACCEPTEE
+  REFUSEE
+}
+
+// Enum for Group Member Junction Table
+enum GroupRole {
+  MODERATEUR
+  MEMBRE
+  NON_MEMBRE
+}
+
+// Group Table
+model Group {
+  groupId String @id @default(uuid()) @db.Uuid
+
+  name       String
+  theme      String
+  desc       String
+  rules      String
+  visibility String
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+}
