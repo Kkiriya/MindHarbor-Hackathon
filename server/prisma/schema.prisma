@@ -53,6 +53,8 @@ model User {
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
+
+  journalEntries JournalEntry[]
 }
 
 // === RESOURCE MODEL === //
@@ -99,4 +101,26 @@ model Activity {
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
+}
+
+// === JOURNAL ENTRY MODEL === //
+
+// JournalEntry Table
+model JournalEntry {
+  journalId String @id @default(uuid()) @db.Uuid
+  userId    String @db.Uuid
+
+  generalMood    Int
+  energyLevel    Int
+  sleepQuality   Int
+  stressLevel    Int
+  keyEvents      Int
+  dailyGratitude String?
+
+  createdAt DateTime  @default(now()) @db.Date
+  updatedAt DateTime? @updatedAt
+
+  user User @relation(fields: [userId], references: [userId])
+
+  @@unique([userId, createdAt])
 }
