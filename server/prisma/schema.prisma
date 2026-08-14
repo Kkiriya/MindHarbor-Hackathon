@@ -57,6 +57,7 @@ model User {
   journalEntries JournalEntry[]
   groupMembers   GroupMember[]
   posts          Post[]
+  comments       Comment[]
 }
 
 // === RESOURCE MODEL === //
@@ -212,6 +213,26 @@ model Post {
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
 
-  user  User  @relation(fields: [userId], references: [userId])
-  group Group @relation(fields: [groupId], references: [groupId])
+  user     User      @relation(fields: [userId], references: [userId])
+  group    Group     @relation(fields: [groupId], references: [groupId])
+  
+  comments Comment[]
+}
+
+// === COMMENT MODEL === //
+
+// Comment Table
+model Comment {
+  commentId String @id @default(uuid()) @db.Uuid
+
+  userId String @db.Uuid
+  postId String @db.Uuid
+
+  comment String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [userId])
+  post Post @relation(fields: [postId], references: [postId])
 }
