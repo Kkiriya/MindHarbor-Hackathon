@@ -1,0 +1,118 @@
+.activitiesGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px 16px;
+}
+
+.dailyActivities {
+    width: 25%;
+}
+
+.entriesTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.entriesTable th,
+.entriesTable td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.entriesTable th {
+    color: var(--color-primary);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px 16px;
+}
+
+.group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+}
+
+.group legend {
+    padding: 0 8px;
+    color: var(--color-primary);
+    font-weight: bold;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.option input {
+    accent-color: var(--color-accent);
+}
+
+.actionButton,
+.pagination button {
+    padding: 8px 16px;
+    color: var(--color-primary);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.actionButton:hover,
+.pagination button:not(:disabled):hover {
+    color: var(--color-accent-hover);
+    border-color: var(--color-accent-hover);
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.pagination button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.tableContainer {
+    overflow-x: auto;
+}
+
+@media (max-width: 900px) {
+    .activitiesGrid,
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .activitiesGrid,
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 12px;
+
+    color: var(--color-text);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    resize: vertical;
+}
