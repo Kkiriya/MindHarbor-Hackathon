@@ -131,7 +131,7 @@ model JournalEntry {
   createdAt DateTime  @default(now()) @db.Date
   updatedAt DateTime? @updatedAt
 
-  user User @relation(fields: [userId], references: [userId])
+  user User @relation(fields: [userId], references: [userId], onDelete: Cascade)
 
   journalActivities JournalActivity[]
 
@@ -143,8 +143,8 @@ model JournalActivity {
   journalId  String @db.Uuid
   activityId String @db.Uuid
 
-  journalEntry JournalEntry @relation(fields: [journalId], references: [journalId])
-  activity     Activity     @relation(fields: [activityId], references: [activityId])
+  journalEntry JournalEntry @relation(fields: [journalId], references: [journalId], onDelete: Cascade)
+  activity     Activity     @relation(fields: [activityId], references: [activityId], onDelete: Cascade)
 
   @@id([journalId, activityId])
 }
@@ -199,8 +199,8 @@ model GroupMember {
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
 
-  user  User  @relation(fields: [userId], references: [userId])
-  group Group @relation(fields: [groupId], references: [groupId])
+  user  User  @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  group Group @relation(fields: [groupId], references: [groupId], onDelete: Cascade)
 
   @@id([userId, groupId])
 }
@@ -209,9 +209,9 @@ model GroupMember {
 
 // Post Table
 model Post {
-  postId  String @id @default(uuid()) @db.Uuid
-  userId  String @db.Uuid
-  groupId String @db.Uuid
+  postId  String  @id @default(uuid()) @db.Uuid
+  userId  String? @db.Uuid
+  groupId String  @db.Uuid
 
   title String
   body  String
@@ -219,8 +219,8 @@ model Post {
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
 
-  user  User  @relation(fields: [userId], references: [userId])
-  group Group @relation(fields: [groupId], references: [groupId])
+  user  User? @relation(fields: [userId], references: [userId], onDelete: SetNull)
+  group Group @relation(fields: [groupId], references: [groupId], onDelete: Cascade)
 
   comments Comment[]
   reports  Report[]
@@ -232,16 +232,16 @@ model Post {
 model Comment {
   commentId String @id @default(uuid()) @db.Uuid
 
-  userId String @db.Uuid
-  postId String @db.Uuid
+  userId String? @db.Uuid
+  postId String  @db.Uuid
 
   comment String
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
 
-  user User @relation(fields: [userId], references: [userId])
-  post Post @relation(fields: [postId], references: [postId])
+  user User? @relation(fields: [userId], references: [userId], onDelete: SetNull)
+  post Post  @relation(fields: [postId], references: [postId], onDelete: Cascade)
 }
 
 // === MESSAGE MODEL === //
@@ -256,17 +256,17 @@ enum MessageReadReceipt {
 model Message {
   messageId String @id @default(uuid()) @db.Uuid
 
-  senderId    String @db.Uuid
-  recipientId String @db.Uuid
+  senderId    String? @db.Uuid
+  recipientId String? @db.Uuid
 
   message     String
   readReceipt MessageReadReceipt @default(SENT)
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime? @updatedAt
 
-  sender    User @relation("SentMsg", fields: [senderId], references: [userId])
-  recipient User @relation("ReceivedMsg", fields: [recipientId], references: [userId])
+  sender    User? @relation("SentMsg", fields: [senderId], references: [userId], onDelete: SetNull)
+  recipient User? @relation("ReceivedMsg", fields: [recipientId], references: [userId], onDelete: SetNull)
 }
 
 // === REPORT MODEL === //
@@ -288,8 +288,9 @@ enum ReportStatus {
 
 // Report Table
 model Report {
-  postId String @db.Uuid
-  userId String @db.Uuid
+  reportId String  @id @default(uuid()) @db.Uuid
+  postId   String  @db.Uuid
+  userId   String? @db.Uuid
 
   category ReportCategory
   status   ReportStatus   @default(EN_ATTENTE)
@@ -297,10 +298,8 @@ model Report {
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
 
-  post Post @relation(fields: [postId], references: [postId])
-  user User @relation(fields: [userId], references: [userId])
-
-  @@id([postId, userId])
+  post Post  @relation(fields: [postId], references: [postId], onDelete: Cascade)
+  user User? @relation(fields: [userId], references: [userId], onDelete: SetNull)
 }
 
 // === REFRESH TOKEN MODEL === //
@@ -317,7 +316,7 @@ model RefreshToken {
   revokedAt DateTime?
   updatedAt DateTime? @updatedAt
 
-  user User @relation(fields: [userId], references: [userId])
+  user User @relation(fields: [userId], references: [userId], onDelete: Cascade)
 }
 
 // === N-N JUNCTION TABLE BETWEEN USER AND RESOURCE === /
@@ -327,8 +326,8 @@ model Favorite {
 
   createdAt DateTime @default(now())
 
-  user     User     @relation(fields: [UserId], references: [userId])
-  resource Resource @relation(fields: [resourceId], references: [resourceId])
+  user     User     @relation(fields: [UserId], references: [userId], onDelete: Cascade)
+  resource Resource @relation(fields: [resourceId], references: [resourceId], onDelete: Cascade)
 
   @@id([UserId, resourceId])
 }
