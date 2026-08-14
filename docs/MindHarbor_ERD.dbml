@@ -6,7 +6,7 @@ Enum UserRole {
     USER // regular user
 }
 
-// Enum for user visibilty
+// Enum for user visibility
 Enum UserVisibilityLevel {
     PUBLIC // anyone can see the full profile
     GROUPES_SEULEMENT // only group members can see the full profile
@@ -24,58 +24,21 @@ Enum UserPrivateMessageLevel {
 Table User {
   userId uuid [primary key]
 
-  email String [not null]
-  password String [not null] // hashed in the actual DB
-  role UserRole [default: `USER`] // determines user permissions
+  email String [not null, unique]
+  password String [not null]
+  role UserRole [default: `USER`]
 
-  username String [not null]
+  username String [not null, unique]
   firstName String [not null]
   lastName String [not null]
   avatarPictureUrl String
   bio String
 
-  // Determines who can view account info outside of the avatar & username
   visibilityLevel UserVisibilityLevel [default: `PRIVE`]
-    // Determine who can send private message
-  privateMessageLevel UserPrivateMessageLevel [default: `MEMBRES_DE_MES_GROUPES`, not null]
+  privateMessageLevel UserPrivateMessageLevel [default: `MEMBRES_DE_MES_GROUPES`]
 
   createdAt datetime [default: `now()`]
   updatedAt datetime
-}
-
-// === JOURNAL ENTRY MODEL === //
-
-// JournalEntry Table
-Table JournalEntry {
-  journalId uuid [primary key, not null]
-  userId uuid [ref: > User.userId, not null]
-
-  generalMood int [check: `generalMood 1 >= and generalMood <= 5`, not null]
-  energyLevel int [check: `energyLevel 1 >= and energyLevel <= 5`, not null]
-  sleepQuality int [check: `sleepQuality 1 >= and sleepQuality <= 5`, not null]
-  stessLevel int [check: `stessLevel 1 >= and stessLevel <= 5`, not null]
-  keyEvents String [not null]
-  dailyGratitude String
-
-  createdAt date [default: `today()`, not null]
-  updatedAt datetime [default: `now()`]
-
-  // unicity constraint that prevents multiple daily entry
-  indexes {
-    (userId, createdAt) [unique]
-  }
-}
-
-// === ACTIVITY MODEL === //
-
-// Activity Table
-Table Activity {
-  activityId uuid [primary key]
-  name String [not null, unique]
-  desc String [not null]
-
-  createdAt datetime [default: `now()`]
-  updatedAt datetime [default: `now()`]
 }
 
 // === RESOURCE MODEL === //
@@ -105,10 +68,52 @@ Table Resource {
   category ResourceCategory [not null]
   type ResourceType [not null]
   duration float [not null]
-  level int [check: `level >= 0`, not null]
+  level int [not null]
 
   createdAt datetime [default: `now()`]
-  updatedAt datetime [default: `now()`]
+  updatedAt datetime
+}
+
+// === ACTIVITY MODEL === //
+
+// Activity Table
+Table Activity {
+  activityId uuid [primary key]
+
+  name String [not null, unique]
+  desc String [not null]
+
+  createdAt datetime [default: `now()`]
+  updatedAt datetime
+}
+
+// === JOURNAL ENTRY MODEL === //
+
+// JournalEntry Table
+Table JournalEntry {
+  journalId uuid [primary key, not null]
+  userId uuid [not null, ref: > User.userId]
+
+  generalMood int [not null]
+  energyLevel int [not null]
+  sleepQuality int [not null]
+  stressLevel int [not null]
+  keyEvents int [not null]
+  dailyGratitude String
+
+  createdAt date [default: `now()`, not null]
+  updatedAt datetime
+
+  indexes {
+    (userId, createdAt) [unique]
+  }
+}
+
+// === N-N JUNCTION TABLE BETWEEN JOURNALENTRY & ACTIVITY === //
+
+Table JournalActivity {
+    journalId uuid [primary key, ref: > JournalEntry.journalId]
+    activityId uuid [primary key, ref: > Activity.activityId]
 }
 
 // === GROUP MODEL === //
@@ -141,22 +146,39 @@ Table Group {
   theme String [not null]
   desc String [not null]
   rules String [not null]
-  visibility GroupVisibility [not null]
+
+  visibility String [not null]
 
   createdAt datetime [default: `now()`]
-  updatedAt datetime [default: `now()`]
+  updatedAt datetime
+}
+
+// === N-N JUNCTION TABLE BETWEEN USERS AND GROUP === //
+
+Table GroupMember {
+  userId uuid [primary key, ref: > User.userId]
+  groupId uuid [primary key, ref: > Group.groupId]
+
+  role GroupRole [default: `NON_MEMBRE`]
+  requestStatus GroupRequestStatus [default: `EN_ATTENTE`]
+
+  createdAt datetime [default: `now()`]
+  updatedAt datetime
 }
 
 // === POST MODEL === //
 
-// Post Table
 Table Post {
   postId uuid [primary key]
-  userId uuid [ref: > User.userId]
-  groupId uuid [ref: > Group.groupId]
 
-  title String [not null] // title for the post
-  body String [not null] // body for the post
+  // Nullable in Prisma
+  userId uuid [ref: > User.userId]
+
+  // Required in Prisma
+  groupId uuid [not null, ref: > Group.groupId]
+
+  title String [not null]
+  body String [not null]
 
   createdAt datetime [default: `now()`]
   updatedAt datetime
@@ -164,13 +186,16 @@ Table Post {
 
 // === COMMENT MODEL === //
 
-// Comment Table
 Table Comment {
   commentId uuid [primary key]
-  userId uuid [ref: > User.userId]
-  postId uuid [ref: > Post.postId]
 
-  comment String [not null] // the actual comment
+  // Nullable in Prisma
+  userId uuid [ref: > User.userId]
+
+  // Required in Prisma
+  postId uuid [not null, ref: > Post.postId]
+
+  comment String [not null]
 
   createdAt datetime [default: `now()`]
   updatedAt datetime
@@ -187,14 +212,16 @@ Enum MessageReadReceipt {
 // Message Table
 Table Message {
   messageId uuid [primary key]
+
+  // Nullable in Prisma
   senderId uuid [ref: > User.userId]
-  recipientId uuid [ref: > User.userId, default: `SENT`]
+  recipientId uuid [ref: > User.userId]
 
   message String [not null]
-  readReceipt MessageReadReceipt [not null]
+  readReceipt MessageReadReceipt [default: `SENT`, not null]
 
   createdAt datetime [default: `now()`]
-  updatedAt datetime //essentially readAt but to keep it consistant with the rest of the db renamed to updatedAt
+  updatedAt datetime
 }
 
 // === REPORT MODEL === //
@@ -216,54 +243,40 @@ Enum ReportStatus {
 
 // Report Table
 Table Report {
- postId uuid [primary key, ref: > Post.postId]
- userId uuid [primary key, ref: > User.userId] // user of the user creating the report
+  reportId uuid [primary key]
 
- category ReportCategory [not null]
- status  ReportStatus [default: `EN_ATTENTE`]
+  postId uuid [not null, ref: > Post.postId]
 
- createdAt datetime [default: `now()`]
- updatedAt datetime
+  // Nullable in Prisma
+  userId uuid [ref: > User.userId]
+
+  category ReportCategory [not null]
+  status ReportStatus [default: `EN_ATTENTE`]
+
+  createdAt datetime [default: `now()`]
+  updatedAt datetime
 }
 
 // === REFRESH TOKEN MODEL === //
 
-// RefreshToken Table
 Table RefreshToken {
- refreshTokenId uuid [primary key]
+  refreshTokenId uuid [primary key]
 
- userId uuid [ref: > User.userId]
+  userId uuid [not null, ref: > User.userId]
 
- tokenHash varchar
- expiresAt datetime
- createdAt datetime [default: `now()`]
- revokedAt datetime
+  tokenHash String [not null]
+  expiresAt datetime [not null]
+
+  createdAt datetime [default: `now()`]
+  revokedAt datetime
+  updatedAt datetime
 }
 
-// === JUNCTION TABLES === //
+// === N-N JUNCTION TABLE BETWEEN USER AND RESOURCE === //
 
-// N-N junction table between JournalEntry and Activity
-Table JournalActivity {
-    journalId uuid [primary key, ref: > JournalEntry.journalId]
-    activityId uuid [primary key, ref: > Activity.activityId]
-}
-
-// N-N junction table between User and Resource, to track a users favorite resource
 Table Favorite {
-    userId uuid [primary key, ref: > User.userId]
-    resource uuid [primary key, ref: > Resource.resourceId]
+  UserId uuid [primary key, ref: > User.userId]
+  resourceId uuid [primary key, ref: > Resource.resourceId]
 
-    createdAt datetime [default: `now()`]
-}
-
-// junction table between User and groups
-Table GroupMember {
-    userId uuid [primary key, ref: > User.userId]
-    groupId uuid [primary key, ref: > Group.groupId]
-
-    role GroupRole [default: `NON_MEMBRE`]
-    requestStatus GroupRequestStatus [default: `EN_ATTENTE`]
-
-    createdAt datetime [default: `now()`]
-    updatedAt datetime
+  createdAt datetime [default: `now()`]
 }
