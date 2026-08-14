@@ -56,6 +56,7 @@ model User {
 
   journalEntries JournalEntry[]
   groupMembers   GroupMember[]
+  posts          Post[]
 }
 
 // === RESOURCE MODEL === //
@@ -177,6 +178,7 @@ model Group {
   updatedAt DateTime? @updatedAt
 
   groupMembers GroupMember[]
+  posts        Post[]
 }
 
 // === N-N JUNCTION TABLE BETWEEN USERS AND GROUP === //
@@ -194,4 +196,22 @@ model GroupMember {
   group Group @relation(fields: [groupId], references: [groupId])
 
   @@id([userId, groupId])
+}
+
+// === POST MODEL === //
+
+// Post Table
+model Post {
+  postId  String @id @default(uuid()) @db.Uuid
+  userId  String @db.Uuid
+  groupId String @db.Uuid
+
+  title String
+  body  String
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  user  User  @relation(fields: [userId], references: [userId])
+  group Group @relation(fields: [groupId], references: [groupId])
 }
