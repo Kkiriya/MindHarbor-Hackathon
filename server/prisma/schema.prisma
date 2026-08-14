@@ -179,7 +179,7 @@ model Group {
   theme      String
   desc       String
   rules      String
-  visibility String
+  visibility GroupVisibility
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
@@ -262,7 +262,7 @@ model Message {
   message     String
   readReceipt MessageReadReceipt @default(SENT)
 
-  createdAt DateTime @default(now())
+  createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
 
   sender    User? @relation("SentMsg", fields: [senderId], references: [userId], onDelete: SetNull)
