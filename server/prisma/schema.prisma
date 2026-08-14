@@ -35,4 +35,22 @@ enum UserPrivateMessageLevel {
 }
 
 // User table
+model User {
+  userId String @id @default(uuid()) @db.Uuid
 
+  email    String   @unique
+  password String
+  role     UserRole @default(USER)
+
+  username         String  @unique
+  firstName        String
+  lastName         String
+  avatarPictureUrl String? // Eventually add a default avatar picture
+  bio              String?
+
+  visibilityLevel     UserVisibilityLevel     @default(PRIVE)
+  privateMessageLevel UserPrivateMessageLevel @default(MEMBRES_DE_MES_GROUPES)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+}
