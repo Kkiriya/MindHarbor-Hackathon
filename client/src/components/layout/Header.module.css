@@ -1,19 +1,29 @@
+.content{
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    width: 100%;
+}
+
 .header {
     position: sticky;
     top: 0;
     z-index: 1000;
-    padding: 16px;
-    background-color: rgb(23 50 77 / 0.95);
+    padding: 8px;
+    background-color: var(--color-primary);
     backdrop-filter: blur(20px);
 }
 
-.content{
-    display: flex;
-    max-width: 1200px;
-    width: 100%;
-    margin: 0 auto;
-    align-items: center;
-    justify-content: center;
+.logo {
+    grid-column: 1;
+    justify-self: start;
+    width: 160px;
+    height: auto;
+}
+
+.nav {
+    grid-column: 2;
+    justify-self: center;
 }
 
 .nav ul {
@@ -28,8 +38,6 @@
     color: var(--color-surface);
     text-decoration: none;
 
-    font-weight: 500;
-
     border-bottom: 2px solid transparent;
 
     transition:
@@ -37,12 +45,12 @@
             border-color 0.2s ease;
 
     /*The size will be x% of the viewport*/
-    font-size: 3.1vw;
+    font-size: 2.5vw;
 }
 
 /*Limits the font-size*/
 @media screen and (min-width: 601px){
-    .nav a {
+    .nav{
         font-size: 30px;
     }
 }
