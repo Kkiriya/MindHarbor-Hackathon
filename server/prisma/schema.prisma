@@ -54,3 +54,36 @@ model User {
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
 }
+
+// === RESOURCE MODEL === //
+
+// Enum for resource category
+enum ResourceCategory {
+  ANXIETY
+  SLEEP
+  RELATIONSHIP
+  WORK
+  GRIEF
+}
+
+// Enum for resource type
+enum ResourceType {
+  ARTICLE
+  EXERCICE
+  FICHE_PRATIQUE
+  LIEN_EXTERNE
+}
+
+// Resource Table
+model Resource {
+  resourceId String @id @default(uuid()) @db.Uuid
+
+  name     String           @unique
+  category ResourceCategory
+  type     ResourceType
+  duration Float
+  level    Int
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+}
