@@ -98,7 +98,7 @@ Table JournalEntry {
   energyLevel int [not null]
   sleepQuality int [not null]
   stressLevel int [not null]
-  keyEvents int [not null]
+  keyEvents String [not null]
   dailyGratitude String
 
   createdAt date [default: `now()`, not null]

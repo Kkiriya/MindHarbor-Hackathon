@@ -125,7 +125,7 @@ model JournalEntry {
   energyLevel    Int
   sleepQuality   Int
   stressLevel    Int
-  keyEvents      Int
+  keyEvents      String
   dailyGratitude String?
 
   createdAt DateTime  @default(now()) @db.Date
