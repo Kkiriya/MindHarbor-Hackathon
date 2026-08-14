@@ -11,3 +11,28 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+// === USER MODEL === //
+
+// Enum for user roles
+enum UserRole {
+  ADMINISTRATOR // system administrator for data collection and overall moderation
+  USER // regular user
+}
+
+// Enum for user visibilty
+enum UserVisibilityLevel {
+  PUBLIC // anyone can see the full profile
+  GROUPES_SEULEMENT // only group members can see the full profile
+  PRIVE // other users can only see avatar, and username
+}
+
+// Enum for user private message level
+enum UserPrivateMessageLevel {
+  PERSONNE // does not accept private messages
+  MEMBRES_DE_MES_GROUPES // only accepts message from shared group members
+  TOUT_LE_MONDE // accepts message from anyone
+}
+
+// User table
+

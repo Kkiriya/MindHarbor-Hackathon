@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 
 /.env
+/.agents
+/.claude
+/.windsurf
