@@ -1,7 +1,6 @@
 import type { RequestHandler } from "express";
 import type { ZodSchema } from "zod/v3";
 import { AppError } from "./error.js";
-import { de } from "zod/locales";
 
 export const validateBody =
   (schema: ZodSchema): RequestHandler =>

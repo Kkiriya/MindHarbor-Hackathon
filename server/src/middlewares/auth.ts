@@ -26,4 +26,4 @@ export const requireRole =
   (req, _res, next) =>
     req.user && roles.includes(req.user.role)
       ? next()
-      : next(new AppError(403, "FORBIDENN", "Acess refuse."));
+      : next(new AppError(403, "FORBIDDEN", "Accès refusé."));

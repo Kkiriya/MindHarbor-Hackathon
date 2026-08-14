@@ -20,7 +20,7 @@ export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
   res.status(status).json({
     error: {
       code: isApp ? err.code : "INTERNAL_ERROR",
-      message: status == 500 ? "Une erruer interne est survenue." : err.message,
+      message: status == 500 ? "Une erreur interne est survenue." : err.message,
       ...(isApp && err.details ? { details: err.details } : {}),
     },
   });
