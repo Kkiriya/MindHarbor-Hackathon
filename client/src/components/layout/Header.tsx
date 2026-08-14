@@ -1,14 +1,17 @@
 import styles from './Header.module.css'
+import {Link} from "react-router-dom";
 
 export default function Header() {
     return (
         <header className={styles.header}>
-            <section>
-                <nav>
+            <section className={styles.content}>
+                <img src="/mindharbor-logo.png" alt="Logo" className={styles.logo}/>
+                <nav className={styles.nav}>
                     <ul>
-                        <li><a href="#">Tableau de bord</a></li>
-                        <li><a href="/wellness-journal">Journal de bien-être</a></li>
-                        <li><a href="#">Analyse et tendances</a></li>
+                        {/* Link vs a: Link don't reload the page */}
+                        <li><Link to="/personal-dashboard" className={styles.Link}>Tableau de bord</Link></li>
+                        <li><Link to="/wellness-journal" className={styles.Link}>Journal de bien-être</Link></li>
+                        <li><Link to="/analysis" className={styles.Link}>Analyse et tendances</Link></li>
                     </ul>
                 </nav>
             </section>
