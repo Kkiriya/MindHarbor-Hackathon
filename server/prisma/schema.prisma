@@ -11,3 +11,323 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+// === USER MODEL === //
+
+// Enum for user roles
+enum UserRole {
+  ADMINISTRATOR // system administrator for data collection and overall moderation
+  USER // regular user
+}
+
+// Enum for user visibilty
+enum UserVisibilityLevel {
+  PUBLIC // anyone can see the full profile
+  GROUPES_SEULEMENT // only group members can see the full profile
+  PRIVE // other users can only see avatar, and username
+}
+
+// Enum for user private message level
+enum UserPrivateMessageLevel {
+  PERSONNE // does not accept private messages
+  MEMBRES_DE_MES_GROUPES // only accepts message from shared group members
+  TOUT_LE_MONDE // accepts message from anyone
+}
+
+// User table
+model User {
+  userId String @id @default(uuid()) @db.Uuid
+
+  email    String   @unique
+  password String
+  role     UserRole @default(USER)
+
+  username         String  @unique
+  firstName        String
+  lastName         String
+  avatarPictureUrl String? // Eventually add a default avatar picture
+  bio              String?
+
+  visibilityLevel     UserVisibilityLevel     @default(PRIVE)
+  privateMessageLevel UserPrivateMessageLevel @default(MEMBRES_DE_MES_GROUPES)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  journalEntries JournalEntry[]
+  groupMembers   GroupMember[]
+  posts          Post[]
+  comments       Comment[]
+  reports        Report[]
+  refreshTokens  RefreshToken[]
+  favorites      Favorite[]
+  sentMsg        Message[]      @relation("SentMsg")
+  receivedMsg    Message[]      @relation("ReceivedMsg")
+}
+
+// === RESOURCE MODEL === //
+
+// Enum for resource category
+enum ResourceCategory {
+  ANXIETY
+  SLEEP
+  RELATIONSHIP
+  WORK
+  GRIEF
+}
+
+// Enum for resource type
+enum ResourceType {
+  ARTICLE
+  EXERCICE
+  FICHE_PRATIQUE
+  LIEN_EXTERNE
+}
+
+// Resource Table
+model Resource {
+  resourceId String @id @default(uuid()) @db.Uuid
+
+  name     String           @unique
+  category ResourceCategory
+  type     ResourceType
+  duration Float
+  level    Int
+
+  createdAt DateTime   @default(now())
+  updatedAt DateTime?  @updatedAt
+  favorites Favorite[]
+}
+
+// === ACTIVITY MODEL === //
+
+// Activity Table
+model Activity {
+  activityId String @id @default(uuid()) @db.Uuid
+
+  name String @unique
+  desc String
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  journalActivities JournalActivity[]
+}
+
+// === JOURNAL ENTRY MODEL === //
+
+// JournalEntry Table
+model JournalEntry {
+  journalId String @id @default(uuid()) @db.Uuid
+  userId    String @db.Uuid
+
+  generalMood    Int
+  energyLevel    Int
+  sleepQuality   Int
+  stressLevel    Int
+  keyEvents      String
+  dailyGratitude String?
+
+  createdAt DateTime  @default(now()) @db.Date
+  updatedAt DateTime? @updatedAt
+
+  user User @relation(fields: [userId], references: [userId], onDelete: Cascade)
+
+  journalActivities JournalActivity[]
+
+  @@unique([userId, createdAt])
+}
+
+// === N-N JUNCTION TABLE BETWEEN JOURNALENTRY & ACTIVITY === //
+model JournalActivity {
+  journalId  String @db.Uuid
+  activityId String @db.Uuid
+
+  journalEntry JournalEntry @relation(fields: [journalId], references: [journalId], onDelete: Cascade)
+  activity     Activity     @relation(fields: [activityId], references: [activityId], onDelete: Cascade)
+
+  @@id([journalId, activityId])
+}
+
+// === GROUP MODEL === //
+
+// Enum for Group Visibility
+enum GroupVisibility {
+  PUBLIC
+  PRIVE
+}
+
+// Enum for Group Member Junction Table
+enum GroupRequestStatus {
+  EN_ATTENTE
+  ACCEPTEE
+  REFUSEE
+}
+
+// Enum for Group Member Junction Table
+enum GroupRole {
+  MODERATEUR
+  MEMBRE
+  NON_MEMBRE
+}
+
+// Group Table
+model Group {
+  groupId String @id @default(uuid()) @db.Uuid
+
+  name       String          @unique
+  theme      String
+  desc       String
+  rules      String
+  visibility GroupVisibility
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  groupMembers GroupMember[]
+  posts        Post[]
+}
+
+// === N-N JUNCTION TABLE BETWEEN USERS AND GROUP === //
+model GroupMember {
+  userId  String @db.Uuid
+  groupId String @db.Uuid
+
+  role          GroupRole          @default(NON_MEMBRE)
+  requestStatus GroupRequestStatus @default(EN_ATTENTE)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  user  User  @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  group Group @relation(fields: [groupId], references: [groupId], onDelete: Cascade)
+
+  @@id([userId, groupId])
+}
+
+// === POST MODEL === //
+
+// Post Table
+model Post {
+  postId  String  @id @default(uuid()) @db.Uuid
+  userId  String? @db.Uuid
+  groupId String  @db.Uuid
+
+  title String
+  body  String
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  user  User? @relation(fields: [userId], references: [userId], onDelete: SetNull)
+  group Group @relation(fields: [groupId], references: [groupId], onDelete: Cascade)
+
+  comments Comment[]
+  reports  Report[]
+}
+
+// === COMMENT MODEL === //
+
+// Comment Table
+model Comment {
+  commentId String @id @default(uuid()) @db.Uuid
+
+  userId String? @db.Uuid
+  postId String  @db.Uuid
+
+  comment String
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  user User? @relation(fields: [userId], references: [userId], onDelete: SetNull)
+  post Post  @relation(fields: [postId], references: [postId], onDelete: Cascade)
+}
+
+// === MESSAGE MODEL === //
+
+// Enum for messages read receipt
+enum MessageReadReceipt {
+  SENT
+  READ
+}
+
+// Message Table
+model Message {
+  messageId String @id @default(uuid()) @db.Uuid
+
+  senderId    String? @db.Uuid
+  recipientId String? @db.Uuid
+
+  message     String
+  readReceipt MessageReadReceipt @default(SENT)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  sender    User? @relation("SentMsg", fields: [senderId], references: [userId], onDelete: SetNull)
+  recipient User? @relation("ReceivedMsg", fields: [recipientId], references: [userId], onDelete: SetNull)
+}
+
+// === REPORT MODEL === //
+
+// Enum for report category
+enum ReportCategory {
+  INAPPROPRIE
+  SPAM
+  INQUIETANT
+}
+
+// Enum for report status
+enum ReportStatus {
+  EN_ATTENTE
+  EN_COURS_DE_REVISION
+  RESOLUE
+  REJETEE
+}
+
+// Report Table
+model Report {
+  reportId String  @id @default(uuid()) @db.Uuid
+  postId   String  @db.Uuid
+  userId   String? @db.Uuid
+
+  category ReportCategory
+  status   ReportStatus   @default(EN_ATTENTE)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  post Post  @relation(fields: [postId], references: [postId], onDelete: Cascade)
+  user User? @relation(fields: [userId], references: [userId], onDelete: SetNull)
+}
+
+// === REFRESH TOKEN MODEL === //
+
+// RefreshToken Table
+model RefreshToken {
+  refreshTokenId String @id @default(uuid()) @db.Uuid
+
+  userId    String @db.Uuid
+  tokenHash String
+
+  expiresAt DateTime
+  createdAt DateTime  @default(now())
+  revokedAt DateTime?
+  updatedAt DateTime? @updatedAt
+
+  user User @relation(fields: [userId], references: [userId], onDelete: Cascade)
+}
+
+// === N-N JUNCTION TABLE BETWEEN USER AND RESOURCE === /
+model Favorite {
+  UserId     String @db.Uuid
+  resourceId String @db.Uuid
+
+  createdAt DateTime @default(now())
+
+  user     User     @relation(fields: [UserId], references: [userId], onDelete: Cascade)
+  resource Resource @relation(fields: [resourceId], references: [resourceId], onDelete: Cascade)
+
+  @@id([UserId, resourceId])
+}
