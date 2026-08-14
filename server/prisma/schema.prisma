@@ -263,3 +263,37 @@ model Message {
   sender    User @relation("SentMsg", fields: [senderId], references: [userId])
   recipient User @relation("ReceivedMsg", fields: [recipientId], references: [userId])
 }
+
+// === REPORT MODEL === //
+
+// Enum for report category
+enum ReportCategory {
+  INAPPROPRIE
+  SPAM
+  INQUIETANT
+}
+
+// Enum for report status
+enum ReportStatus {
+  EN_ATTENTE
+  EN_COURS_DE_REVISION
+  RESOLUE
+  REJETEE
+}
+
+// Report Table
+model Report {
+  postId String @db.Uuid
+  userId String @db.Uuid
+
+  category ReportCategory
+  status   ReportStatus   @default(EN_ATTENTE)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  post Post @relation(fields: [postId], references: [postId])
+  user User @relation(fields: [userId], references: [userId])
+
+  @@id([postId, userId])
+}
