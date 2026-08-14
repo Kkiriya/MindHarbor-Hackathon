@@ -1,10 +1,8 @@
 .content{
-    display: flex;
-    max-width: 1200px;
-    width: 100%;
-    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    justify-content: center;
+    width: 100%;
 }
 
 .header {
@@ -17,11 +15,15 @@
 }
 
 .logo {
-    display: block;
-    width: 200px;
-    height: 200px;
-    object-fit: contain;
-    margin-right: 16px;
+    grid-column: 1;
+    justify-self: start;
+    width: 160px;
+    height: auto;
+}
+
+.nav {
+    grid-column: 2;
+    justify-self: center;
 }
 
 .nav ul {
