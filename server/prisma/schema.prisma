@@ -58,6 +58,8 @@ model User {
   groupMembers   GroupMember[]
   posts          Post[]
   comments       Comment[]
+  messages       Message[]
+  messages       Message[]
 }
 
 // === RESOURCE MODEL === //
@@ -213,9 +215,9 @@ model Post {
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
 
-  user     User      @relation(fields: [userId], references: [userId])
-  group    Group     @relation(fields: [groupId], references: [groupId])
-  
+  user  User  @relation(fields: [userId], references: [userId])
+  group Group @relation(fields: [groupId], references: [groupId])
+
   comments Comment[]
 }
 
@@ -235,4 +237,29 @@ model Comment {
 
   user User @relation(fields: [userId], references: [userId])
   post Post @relation(fields: [postId], references: [postId])
+}
+
+// === MESSAGE MODEL === //
+
+// Enum for messages read receipt
+enum MessageReadReceipt {
+  SENT
+  READ
+}
+
+// Message Table
+model Message {
+  messageId String @id @default(uuid()) @db.Uuid
+
+  senderId    String @db.Uuid
+  recipientId String @db.Uuid
+
+  message     String
+  readReceipt MessageReadReceipt @default(SENT)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sender    User @relation("SentMsg", fields: [senderId], references: [userId])
+  recipient User @relation("ReceivedMsg", fields: [recipientId], references: [userId])
 }

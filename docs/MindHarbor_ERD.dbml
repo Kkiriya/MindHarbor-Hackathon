@@ -188,7 +188,7 @@ Enum MessageReadReceipt {
 Table Message {
   messageId uuid [primary key]
   senderId uuid [ref: > User.userId]
-  recipientId uuid [ref: > User.userId]
+  recipientId uuid [ref: > User.userId, default: `SENT`]
 
   message String [not null]
   readReceipt MessageReadReceipt [not null]
