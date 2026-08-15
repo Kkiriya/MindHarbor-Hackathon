@@ -121,6 +121,8 @@ model JournalEntry {
   journalId String @id @default(uuid()) @db.Uuid
   userId    String @db.Uuid
 
+  date DateTime @default(now()) @db.Date
+
   generalMood    Int
   energyLevel    Int
   sleepQuality   Int
@@ -128,14 +130,14 @@ model JournalEntry {
   keyEvents      String
   dailyGratitude String?
 
-  createdAt DateTime  @default(now()) @db.Date
+  createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
 
   user User @relation(fields: [userId], references: [userId], onDelete: Cascade)
 
   journalActivities JournalActivity[]
 
-  @@unique([userId, createdAt])
+  @@unique([userId, date])
 }
 
 // === N-N JUNCTION TABLE BETWEEN JOURNALENTRY & ACTIVITY === //

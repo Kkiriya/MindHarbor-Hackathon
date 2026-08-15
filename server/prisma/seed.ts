@@ -116,7 +116,6 @@ async function main() {
     {
       email: "gabriel.leblanc@mindharbor.local",
       username: "gabriel_l",
-Use the Source Control view to resolve conflicts, 2 of 2 re      firstName: "Gabriel",
       lastName: "Leblanc",
       bio: "Working on maintaining a better work-life balance.",
       visibilityLevel: prismaEnums.UserVisibilityLevel.GROUPES_SEULEMENT,
