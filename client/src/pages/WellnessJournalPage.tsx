@@ -82,6 +82,19 @@ export default function WellnessJournalPage() {
                 : currentIds.filter((id) => id !== activityId)
         );
     }
+    function handleSignificantEventsChange(value: string) {
+        setJournalData((currentData) => ({
+            ...currentData,
+            keyEvents: value,
+        }));
+    }
+
+    function handleGratitudeChange(value: string) {
+        setJournalData((currentData) => ({
+            ...currentData,
+            dailyGratitude: value,
+        }));
+    }
 
     function handleSave() {
         console.log("Données du journal à enregistrer :", journalData);
@@ -105,8 +118,16 @@ export default function WellnessJournalPage() {
                 onChange={handleActivityChange}
             />
 
-            <SignificantEvents/>
-            <Gratitude/>
+            <SignificantEvents
+                value={journalData.keyEvents}
+                onChange={handleSignificantEventsChange}
+            />
+
+            <Gratitude
+                value={journalData.dailyGratitude}
+                onChange={handleGratitudeChange}
+            />
+
             <button type="button" onClick={handleSave}>Enregistrer</button>
             <PreviousEntries/>
 
