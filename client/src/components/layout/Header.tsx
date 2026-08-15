@@ -4,10 +4,12 @@ import {useState} from "react";
 import type {FormEvent} from "react";
 import axios from "axios";
 import {useAuth} from "../../context/AuthContext.tsx";
+import RegisterForm from "../auth/RegisterForm.tsx";
 
 export default function Header() {
-    // The form stays local to the header; authentication is shared by the context.
+    // The forms stay local to the header; authentication is shared by the context.
     const [showLogin, setShowLogin] = useState(false);
+    const [showRegister, setShowRegister] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -38,14 +40,24 @@ export default function Header() {
     return (
         <header className={styles.header}>
             <div className={styles.content}>
-                <img src="/mindharbor-logo.png" alt="Logo MindHarbor" className={styles.logo}/>
+                <img
+                    src="/mindharbor-logo.png"
+                    alt="Logo MindHarbor"
+                    className={styles.logo}
+                />
 
                 <nav className={styles.nav}>
                     <ul>
                         {/* Link changes the page without reloading the React application. */}
-                        <li><Link to="/personal-dashboard">Tableau de bord</Link></li>
-                        <li><Link to="/wellness-journal">Journal de bien-être</Link></li>
-                        <li><Link to="/analysis">Analyse et tendances</Link></li>
+                        <li>
+                            <Link to="/personal-dashboard">Tableau de bord</Link>
+                        </li>
+                        <li>
+                            <Link to="/wellness-journal">Journal de bien-être</Link>
+                        </li>
+                        <li>
+                            <Link to="/analysis">Analyse et tendances</Link>
+                        </li>
                     </ul>
                 </nav>
 
@@ -53,18 +65,29 @@ export default function Header() {
                     {isLoggedIn ? (
                         <>
                             <span>Connecté</span>
-                            <button type="button" onClick={logout}>Déconnexion</button>
+                            <button type="button" onClick={logout}>
+                                Déconnexion
+                            </button>
                         </>
                     ) : (
-                        <button
-                            type="button"
-                            onClick={() => setShowLogin((currentValue) => !currentValue)}
-                        >
-                            Se connecter
-                        </button>
+                        <>
+                            <button
+                                type="button"
+                                onClick={() => setShowLogin((currentValue) => !currentValue)}
+                            >
+                                Se connecter
+                            </button>
+
+                            <button
+                                type="button"
+                                onClick={() => setShowRegister((currentValue) => !currentValue)}
+                            >
+                                S'inscrire
+                            </button>
+                        </>
                     )}
 
-                    {showLogin && (
+                    {showLogin && !isLoggedIn && (
                         <form className={styles.loginForm} onSubmit={handleLogin}>
                             <label>
                                 Courriel
@@ -90,6 +113,13 @@ export default function Header() {
 
                             <button type="submit">Connexion</button>
                         </form>
+                    )}
+
+                    {showRegister && !isLoggedIn && (
+                        <RegisterForm
+                            onCancel={() => setShowRegister(false)}
+                            onSuccess={() => setShowRegister(false)}
+                        />
                     )}
                 </div>
             </div>
