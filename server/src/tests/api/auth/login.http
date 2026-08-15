@@ -13,12 +13,6 @@ Content-Type: application/json
   "password": "TestPassword123"
 }
 
-# "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJmZDU1ZjQ3LThkMjctNDZkYy04NzI0LWMxZWQ4ZTgwMTUxZiIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzg2ODIyMzIxLCJleHAiOjE3ODY4MjMyMjF9.0XOYzJvZKQDzCeZD_trYtzCVmclvEY1jbbvYFQsieQY",
-
-# "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJmZDU1ZjQ3LThkMjctNDZkYy04NzI0LWMxZWQ4ZTgwMTUxZiIsImlhdCI6MTc4NjgyMjMyMSwiZXhwIjoxNzg3NDI3MTIxfQ.nkmuzKqbjH7_UDRUYQ6530SPglTH1tb6LXajzL3CFzg"
-
-
-
 ### Login - wrong password
 POST {{baseUrl}}/auth/login
 Content-Type: application/json
