@@ -5,7 +5,7 @@ import SignificantEvents from "../components/wellness-journal/SignificantEvents.
 import Gratitude from "../components/wellness-journal/Gratitude.tsx";
 import styles from "./WellnessJournal.module.css";
 import {useState} from "react";
-import type {Activity, JournalEntry} from "../types/WellnessJournalTypes.ts";
+import type {Activity, JournalEntryData} from "../types/WellnessJournalTypes.ts";
 
 const placeholderActivities: Activity[] = [
     {
@@ -40,24 +40,31 @@ const placeholderActivities: Activity[] = [
     },
 ];
 
+/**
+ * WellnessJournalPage component that renders the wellness journal page.
+ * journalData must have the same structure as JournalEntryData type.
+ * @constructor
+ */
 export default function WellnessJournalPage() {
-    const [wellnessData, setWellnessData] = useState<JournalEntry>({
-        mood: 0,
-        energy: 0,
-        sleep: 0,
-        stress: 0,
+    const [journalData, setJournalData] = useState<JournalEntryData>({
+        energyLevel: 0,
+        generalMood: 0,
+        sleepQuality: 0,
+        stressLevel: 0,
+        keyEvents: "",
+        dailyGratitude: "",
     });
 
     const [selectedActivitiesId, setSelectedActivitiesId] = useState<string[]>([]);
-
 
     /**
      * Handles changes to the wellness data state.
      * @param field The field of the wellness data to update.
      * @param value The new value for the specified field.
      */
-    function handleWellnessChange(field: keyof JournalEntry, value: number) {
-        setWellnessData((currentData) => ({
+    function handleWellnessChange(field: keyof JournalEntryData, value: number) {
+        setJournalData((currentData) => ({
+            // Spread the current data to keep other fields unchanged
             ...currentData,
             [field]: value,
         }));
@@ -77,7 +84,7 @@ export default function WellnessJournalPage() {
     }
 
     function handleSave() {
-        console.log("Données du journal à enregistrer :", wellnessData);
+        console.log("Données du journal à enregistrer :", journalData);
     }
 
     return (
@@ -88,7 +95,7 @@ export default function WellnessJournalPage() {
             </header>
 
             <GeneralWellness
-                data={wellnessData}
+                data={journalData}
                 onChange={handleWellnessChange}
             />
 
@@ -102,6 +109,7 @@ export default function WellnessJournalPage() {
             <Gratitude/>
             <button type="button" onClick={handleSave}>Enregistrer</button>
             <PreviousEntries/>
+
         </main>
     )
 }

@@ -1,5 +1,11 @@
 import styles from "./WellnessJournal.module.css";
-import type {ActivitiesProps} from "../../types/WellnessJournalTypes.ts";
+import type {Activity} from "../../types/WellnessJournalTypes.ts";
+
+interface ActivitiesProps {
+    activities: Activity[];
+    selectedActivitiesId: string[];
+    onChange: (activityId: string, checked: boolean) => void;
+}
 
 //TODO Find a way to have a description of the activities. There is a one in the db table.
 // Maybe a mouse hover on the label to show the description ?

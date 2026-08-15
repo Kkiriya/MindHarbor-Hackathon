@@ -1,6 +1,15 @@
 import styles from "./WellnessJournal.module.css"
-import type { GeneralWellnessProps } from "../../types/WellnessJournalTypes.ts";
+import type {JournalEntryData} from "../../types/WellnessJournalTypes.ts";
 
+/**
+ * Props for the GeneralWellness component.
+ * @property data The current journal data.
+ * @property onChange A callback used to update one wellness value.
+ */
+interface GeneralWellnessProps {
+    data: JournalEntryData;
+    onChange: (field: keyof JournalEntryData, value: number) => void;
+}
 
 //TODO Check if there is a way to have a kind of array of inputs so it don't repeat as much
 
@@ -15,7 +24,7 @@ export default function GeneralWellness({data, onChange}: GeneralWellnessProps) 
                     <label className={styles.option}>
                         <input
                             type="radio"
-                            name="mood"
+                            name="generalMood"
                             value="1"
                             checked={data.generalMood === 1}
                             onChange={() => onChange("generalMood", 1)}
@@ -25,7 +34,7 @@ export default function GeneralWellness({data, onChange}: GeneralWellnessProps) 
                     <label className={styles.option}>
                         <input
                             type="radio"
-                            name="mood"
+                            name="generalMood"
                             value="2"
                             checked={data.generalMood === 2}
                             onChange={() => onChange("generalMood", 2)}
@@ -35,7 +44,7 @@ export default function GeneralWellness({data, onChange}: GeneralWellnessProps) 
                     <label className={styles.option}>
                         <input
                             type="radio"
-                            name="mood"
+                            name="generalMood"
                             value="3"
                             checked={data.generalMood === 3}
                             onChange={() => onChange("generalMood", 3)}
@@ -45,7 +54,7 @@ export default function GeneralWellness({data, onChange}: GeneralWellnessProps) 
                     <label className={styles.option}>
                         <input
                             type="radio"
-                            name="mood"
+                            name="generalMood"
                             value="4"
                             checked={data.generalMood === 4}
                             onChange={() => onChange("generalMood", 4)}
@@ -55,7 +64,7 @@ export default function GeneralWellness({data, onChange}: GeneralWellnessProps) 
                     <label className={styles.option}>
                         <input
                             type="radio"
-                            name="mood"
+                            name="generalMood"
                             value="5"
                             checked={data.generalMood === 5}
                             onChange={() => onChange("generalMood", 5)}
