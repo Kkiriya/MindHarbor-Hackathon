@@ -1,6 +1,10 @@
 import { Router } from "express";
 import { requireAuth } from "../middlewares/auth.js";
-import { validateBody } from "../middlewares/validate.js";
+import {
+  validateBody,
+  validateParams,
+  validateQuery,
+} from "../middlewares/validate.js";
 import {
   createJournalEntry,
   getJournalEntries,
@@ -12,6 +16,9 @@ import {
 import {
   createJournalSchema,
   updateJournalSchema,
+  journalDateSchema,
+  journalQuerySchema,
+  statsQuerySchema,
 } from "../schema/journal.schema.js";
 
 const router = Router();
@@ -19,11 +26,16 @@ router.use(requireAuth);
 
 // /stats and /insights must come before /:date. Otherwise Express could interpret "stats" as a date.
 
-router.get("/stats", getJournalStats);
-router.get("/insights", getJournalInsights);
-router.get("/", getJournalEntries);
+router.get("/stats", validateQuery(statsQuerySchema), getJournalStats);
+router.get("/insights", validateQuery(statsQuerySchema), getJournalInsights);
+router.get("/", validateQuery(journalQuerySchema), getJournalEntries);
 router.post("/", validateBody(createJournalSchema), createJournalEntry);
-router.get("/:date", getJournalEntry);
-router.patch("/:date", validateBody(updateJournalSchema), updateJournalEntry);
+router.get("/:date", validateParams(journalDateSchema), getJournalEntry);
+router.patch(
+  "/:date",
+  validateParams(journalDateSchema),
+  validateBody(updateJournalSchema),
+  updateJournalEntry,
+);
 
 export default router;

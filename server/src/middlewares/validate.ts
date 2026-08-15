@@ -21,7 +21,7 @@ export const validateBody =
 
 export const validateQuery =
   (schema: ZodSchema): RequestHandler =>
-  (req, res, next) => {
+  (req, _res, next) => {
     const result = schema.safeParse(req.query);
 
     if (!result.success) {
@@ -39,7 +39,7 @@ export const validateQuery =
 
 export const validateParams =
   (schema: ZodSchema): RequestHandler =>
-  (req, res, next) => {
+  (req, _res, next) => {
     const result = schema.safeParse(req.params);
 
     if (!result.success) {

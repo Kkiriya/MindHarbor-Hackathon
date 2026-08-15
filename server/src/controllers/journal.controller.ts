@@ -7,8 +7,6 @@ import type {
   JournalQuery,
   StatsQuery,
 } from "../schema/journal.schema.js";
-import { catchall } from "zod/mini";
-import { parse } from "node:path";
 
 function getRangeStart(range: "7d" | "30d" | "90d"): Date {
   const date = new Date();

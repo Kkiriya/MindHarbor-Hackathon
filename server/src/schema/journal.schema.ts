@@ -1,7 +1,6 @@
-import { create } from "node:domain";
 import { z } from "zod/v3";
 
-export const journalDateScheam = z.object({
+export const journalDateSchema = z.object({
   date: z
     .string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, "La date doit être au format YYYY-MM-DD."),
@@ -27,8 +26,24 @@ export const createJournalSchema = z.object({
   dailyGratitude: z.string().trim().optional(),
 });
 
-export const updateJournalSchema = createJournalSchema.omit({
-  date: true,
+export const updateJournalSchema = z.object({
+  generalMood: z.number().int().min(1).max(5).optional(),
+
+  energyLevel: z.number().int().min(1).max(5).optional(),
+
+  sleepQuality: z.number().int().min(1).max(5).optional(),
+
+  stressLevel: z.number().int().min(1).max(5).optional(),
+
+  activityIds: z.array(z.string().uuid()).optional(),
+
+  keyEvents: z
+    .string()
+    .trim()
+    .min(1, "Les événements marquants sont requis.")
+    .optional(),
+
+  dailyGratitude: z.string().trim().optional(),
 });
 
 export const journalQuerySchema = z.object({
@@ -38,7 +53,7 @@ export const journalQuerySchema = z.object({
 
   sort: z
     .enum(["date_asc", "date_desc", "mood_asc", "mood_desc"])
-    .default("date_asc"),
+    .default("date_desc"),
 
   minMood: z.coerce.number().int().min(1).max(5).optional(),
 
@@ -52,6 +67,9 @@ export const statsQuerySchema = z.object({
 });
 
 export type CreateJournalInput = z.infer<typeof createJournalSchema>;
+
 export type UpdateJournalInput = z.infer<typeof updateJournalSchema>;
+
 export type JournalQuery = z.infer<typeof journalQuerySchema>;
+
 export type StatsQuery = z.infer<typeof statsQuerySchema>;
