@@ -4,8 +4,10 @@ import DailyActivities from "../components/wellness-journal/DailyActivities.tsx"
 import SignificantEvents from "../components/wellness-journal/SignificantEvents.tsx";
 import Gratitude from "../components/wellness-journal/Gratitude.tsx";
 import styles from "./WellnessJournal.module.css";
-import {useState} from "react";
-import type {Activity, JournalEntryData} from "../types/WellnessJournalTypes.ts";
+import {useEffect, useState} from "react";
+import type {Activity, JournalEntryData, JournalEntry} from "../types/WellnessJournalTypes.ts";
+import {useAuth} from "../context/AuthContext.tsx";
+import axios from "axios";
 
 const placeholderActivities: Activity[] = [
     {
@@ -57,6 +59,37 @@ export default function WellnessJournalPage() {
 
     const [selectedActivitiesId, setSelectedActivitiesId] = useState<string[]>([]);
 
+    const {token} = useAuth();
+    const [previousEntries, setPreviousEntries] = useState<JournalEntry[]>([]);
+
+    useEffect(() => {
+        async function loadPreviousEntries() {
+            if (!token) {
+                return;
+            }
+
+            try {
+                const response = await axios.get(
+                    "http://localhost:3000/api/v1/journal",
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+
+                setPreviousEntries(response.data.data);
+            } catch (error) {
+                console.error(
+                    "Unable to load previous entries:",
+                    error
+                );
+            }
+        }
+
+        loadPreviousEntries();
+    }, [token]);
+
     /**
      * Handles changes to the wellness data state.
      * @param field The field of the wellness data to update.
@@ -97,7 +130,12 @@ export default function WellnessJournalPage() {
     }
 
     function handleSave() {
-        console.log("Données du journal à enregistrer :", journalData);
+        const newEntry: JournalEntry = {
+            journalId: crypto.randomUUID(),
+            date: new Date().toISOString(),
+            ...journalData,
+        };
+        console.log("Données du journal à enregistrer :", newEntry);
     }
 
     return (
@@ -129,7 +167,8 @@ export default function WellnessJournalPage() {
             />
 
             <button type="button" onClick={handleSave}>Enregistrer</button>
-            <PreviousEntries/>
+
+            <PreviousEntries entries={previousEntries}/>
 
         </main>
     )

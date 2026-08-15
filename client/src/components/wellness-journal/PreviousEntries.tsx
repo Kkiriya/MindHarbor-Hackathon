@@ -1,44 +1,9 @@
 import styles from "./WellnessJournal.module.css";
+import type {JournalEntry} from "../../types/WellnessJournalTypes.ts";
 
-export interface WellnessEntry {
-    id: number;
-    date: string;
-    energy: number;
-    mood: number;
-    sleep: number;
-    stress: number;
+interface Props {
+    entries: JournalEntry[];
 }
-
-interface PreviousEntriesProps {
-    entries?: WellnessEntry[];
-}
-
-const sampleEntries: WellnessEntry[] = [
-    {
-        id: 1,
-        date: "2026-08-12",
-        energy: 2,
-        mood: 3,
-        sleep: 4,
-        stress: 4,
-    },
-    {
-        id: 2,
-        date: "2026-08-11",
-        energy: 3,
-        mood: 4,
-        sleep: 3,
-        stress: 2,
-    },
-    {
-        id: 3,
-        date: "2026-08-10",
-        energy: 2,
-        mood: 2,
-        sleep: 3,
-        stress: 5,
-    },
-];
 
 const dateFormatter = new Intl.DateTimeFormat("fr-CA", {
     day: "numeric",
@@ -47,7 +12,7 @@ const dateFormatter = new Intl.DateTimeFormat("fr-CA", {
     year: "numeric",
 });
 
-export default function PreviousEntries({entries = sampleEntries}: PreviousEntriesProps) {
+export default function PreviousEntries({entries}: Props) {
     return (
         <section className={styles.group}>
             <h3>Entrées antérieures</h3>
@@ -67,16 +32,16 @@ export default function PreviousEntries({entries = sampleEntries}: PreviousEntri
 
                     <tbody>
                         {entries.map((entry) => (
-                            <tr key={entry.id}>
+                            <tr key={entry.journalId}>
                                 <td>
                                     <time dateTime={entry.date}>
                                         {dateFormatter.format(new Date(entry.date))}
                                     </time>
                                 </td>
-                                <td>{entry.mood} / 5</td>
-                                <td>{entry.energy} / 5</td>
-                                <td>{entry.sleep} / 5</td>
-                                <td>{entry.stress} / 5</td>
+                                <td>{entry.generalMood} / 5</td>
+                                <td>{entry.energyLevel} / 5</td>
+                                <td>{entry.sleepQuality} / 5</td>
+                                <td>{entry.stressLevel} / 5</td>
                                 <td>
                                     <button className={styles.actionButton} type="button">
                                         Consulter
