@@ -1,15 +1,14 @@
 import styles from "./WellnessJournal.module.css"
-import type {WellnessData} from "../../types/WellnessJournalTypes.ts";
+import type {JournalEntryData} from "../../types/WellnessJournalTypes.ts";
 
 /**
- * Props for the GeneralWellness component that the function must receive.
- * @property data The current wellness data.
- * @property onChange A callback function to handle changes to the wellness data.
+ * Props for the GeneralWellness component.
+ * @property data The current journal data.
+ * @property onChange A callback used to update one wellness value.
  */
 interface Props {
-    data: WellnessData;
-    // keyof confirms that the field is one of the keys of the WellnessData type, and value is a number.
-    onChange: (field: keyof WellnessData, value: number) => void;
+    data: JournalEntryData;
+    onChange: (field: keyof JournalEntryData, value: number) => void;
 }
 
 //TODO Check if there is a way to have a kind of array of inputs so it don't repeat as much
@@ -25,50 +24,50 @@ export default function GeneralWellness({data, onChange}: Props) {
                     <label className={styles.option}>
                         <input
                             type="radio"
-                            name="mood"
+                            name="generalMood"
                             value="1"
-                            checked={data.mood === 1}
-                            onChange={() => onChange("mood", 1)}
+                            checked={data.generalMood === 1}
+                            onChange={() => onChange("generalMood", 1)}
                         />
                         1 - Très mal
                     </label>
                     <label className={styles.option}>
                         <input
                             type="radio"
-                            name="mood"
+                            name="generalMood"
                             value="2"
-                            checked={data.mood === 2}
-                            onChange={() => onChange("mood", 2)}
+                            checked={data.generalMood === 2}
+                            onChange={() => onChange("generalMood", 2)}
                         />
                         2 - Mal
                     </label>
                     <label className={styles.option}>
                         <input
                             type="radio"
-                            name="mood"
+                            name="generalMood"
                             value="3"
-                            checked={data.mood === 3}
-                            onChange={() => onChange("mood", 3)}
+                            checked={data.generalMood === 3}
+                            onChange={() => onChange("generalMood", 3)}
                         />
                         3 - Moyen
                     </label>
                     <label className={styles.option}>
                         <input
                             type="radio"
-                            name="mood"
+                            name="generalMood"
                             value="4"
-                            checked={data.mood === 4}
-                            onChange={() => onChange("mood", 4)}
+                            checked={data.generalMood === 4}
+                            onChange={() => onChange("generalMood", 4)}
                         />
                         4 - Bien
                     </label>
                     <label className={styles.option}>
                         <input
                             type="radio"
-                            name="mood"
+                            name="generalMood"
                             value="5"
-                            checked={data.mood === 5}
-                            onChange={() => onChange("mood", 5)}
+                            checked={data.generalMood === 5}
+                            onChange={() => onChange("generalMood", 5)}
                         />
                         5 - Très bien
                     </label>
@@ -81,8 +80,8 @@ export default function GeneralWellness({data, onChange}: Props) {
                             type="radio"
                             name="energy"
                             value="1"
-                            checked={data.energy === 1}
-                            onChange={() => onChange("energy", 1)}
+                            checked={data.energyLevel === 1}
+                            onChange={() => onChange("energyLevel", 1)}
                         />
                         1 - Très fatigué
                     </label>
@@ -91,8 +90,8 @@ export default function GeneralWellness({data, onChange}: Props) {
                             type="radio"
                             name="energy"
                             value="2"
-                            checked={data.energy === 2}
-                            onChange={() => onChange("energy", 2)}
+                            checked={data.energyLevel === 2}
+                            onChange={() => onChange("energyLevel", 2)}
                         />
                         2 - Fatigué
                     </label>
@@ -101,8 +100,8 @@ export default function GeneralWellness({data, onChange}: Props) {
                             type="radio"
                             name="energy"
                             value="3"
-                            checked={data.energy === 3}
-                            onChange={() => onChange("energy", 3)}
+                            checked={data.energyLevel === 3}
+                            onChange={() => onChange("energyLevel", 3)}
                         />
                         3 - Moyen
                     </label>
@@ -111,8 +110,8 @@ export default function GeneralWellness({data, onChange}: Props) {
                             type="radio"
                             name="energy"
                             value="4"
-                            checked={data.energy === 4}
-                            onChange={() => onChange("energy", 4)}
+                            checked={data.energyLevel === 4}
+                            onChange={() => onChange("energyLevel", 4)}
                         />
                         4 - Énergique
                     </label>
@@ -121,8 +120,8 @@ export default function GeneralWellness({data, onChange}: Props) {
                             type="radio"
                             name="energy"
                             value="5"
-                            checked={data.energy === 5}
-                            onChange={() => onChange("energy", 5)}
+                            checked={data.energyLevel === 5}
+                            onChange={() => onChange("energyLevel", 5)}
                         />
                         5 - Plein d'énergie
                     </label>
@@ -135,8 +134,8 @@ export default function GeneralWellness({data, onChange}: Props) {
                             type="radio"
                             name="sleep"
                             value="1"
-                            checked={data.sleep === 1}
-                            onChange={() => onChange("sleep", 1)}
+                            checked={data.sleepQuality === 1}
+                            onChange={() => onChange("sleepQuality", 1)}
                         />
                         1 - Très mal dormi
                     </label>
@@ -145,8 +144,8 @@ export default function GeneralWellness({data, onChange}: Props) {
                             type="radio"
                             name="sleep"
                             value="2"
-                            checked={data.sleep === 2}
-                            onChange={() => onChange("sleep", 2)}
+                            checked={data.sleepQuality === 2}
+                            onChange={() => onChange("sleepQuality", 2)}
                         />
                         2 - Mal dormi
                     </label>
@@ -155,8 +154,8 @@ export default function GeneralWellness({data, onChange}: Props) {
                             type="radio"
                             name="sleep"
                             value="3"
-                            checked={data.sleep === 3}
-                            onChange={() => onChange("sleep", 3)}
+                            checked={data.sleepQuality === 3}
+                            onChange={() => onChange("sleepQuality", 3)}
                         />
                         3 - Moyen
                     </label>
@@ -165,8 +164,8 @@ export default function GeneralWellness({data, onChange}: Props) {
                             type="radio"
                             name="sleep"
                             value="4"
-                            checked={data.sleep === 4}
-                            onChange={() => onChange("sleep", 4)}
+                            checked={data.sleepQuality === 4}
+                            onChange={() => onChange("sleepQuality", 4)}
                         />
                         4 - Bien dormi
                     </label>
@@ -175,8 +174,8 @@ export default function GeneralWellness({data, onChange}: Props) {
                             type="radio"
                             name="sleep"
                             value="5"
-                            checked={data.sleep === 5}
-                            onChange={() => onChange("sleep", 5)}
+                            checked={data.sleepQuality === 5}
+                            onChange={() => onChange("sleepQuality", 5)}
                         />
                         5 - Très bien dormi
                     </label>
@@ -189,8 +188,8 @@ export default function GeneralWellness({data, onChange}: Props) {
                             type="radio"
                             name="stress"
                             value="1"
-                            checked={data.stress === 1}
-                            onChange={() => onChange("stress", 1)}
+                            checked={data.stressLevel === 1}
+                            onChange={() => onChange("stressLevel", 1)}
                         />
                         1 - Très peu stressé
                     </label>
@@ -199,8 +198,8 @@ export default function GeneralWellness({data, onChange}: Props) {
                             type="radio"
                             name="stress"
                             value="2"
-                            checked={data.stress === 2}
-                            onChange={() => onChange("stress", 2)}
+                            checked={data.stressLevel === 2}
+                            onChange={() => onChange("stressLevel", 2)}
                         />
                         2 - Peu stressé
                     </label>
@@ -209,8 +208,8 @@ export default function GeneralWellness({data, onChange}: Props) {
                             type="radio"
                             name="stress"
                             value="3"
-                            checked={data.stress === 3}
-                            onChange={() => onChange("stress", 3)}
+                            checked={data.stressLevel === 3}
+                            onChange={() => onChange("stressLevel", 3)}
                         />
                         3 - Stressé
                     </label>
@@ -219,8 +218,8 @@ export default function GeneralWellness({data, onChange}: Props) {
                             type="radio"
                             name="stress"
                             value="4"
-                            checked={data.stress === 4}
-                            onChange={() => onChange("stress", 4)}
+                            checked={data.stressLevel === 4}
+                            onChange={() => onChange("stressLevel", 4)}
                         />
                         4 - Très stressé
                     </label>
@@ -229,8 +228,8 @@ export default function GeneralWellness({data, onChange}: Props) {
                             type="radio"
                             name="stress"
                             value="5"
-                            checked={data.stress === 5}
-                            onChange={() => onChange("stress", 5)}
+                            checked={data.stressLevel === 5}
+                            onChange={() => onChange("stressLevel", 5)}
                         />
                         5 - Anxieux
                     </label>
