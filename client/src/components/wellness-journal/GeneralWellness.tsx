@@ -1,20 +1,10 @@
 import styles from "./WellnessJournal.module.css"
-import type {JournalEntry} from "../../types/WellnessJournalTypes.ts";
+import type { GeneralWellnessProps } from "../../types/WellnessJournalTypes.ts";
 
-/**
- * Props for the GeneralWellness component that the function must receive.
- * @property data The current wellness data.
- * @property onChange A callback function to handle changes to the wellness data.
- */
-interface Props {
-    data: JournalEntry;
-    // keyof confirms that the field is one of the keys of the WellnessData type, and value is a number.
-    onChange: (field: keyof JournalEntry, value: number) => void;
-}
 
 //TODO Check if there is a way to have a kind of array of inputs so it don't repeat as much
 
-export default function GeneralWellness({data, onChange}: Props) {
+export default function GeneralWellness({data, onChange}: GeneralWellnessProps) {
     return (
         <section>
             <h3>Humeur Générale</h3>
