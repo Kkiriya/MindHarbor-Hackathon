@@ -4,6 +4,8 @@ import helmet from "helmet";
 import morgan from "morgan";
 
 import authRoutes from "./routes/auth.routes.js";
+import journalRoutes from "./routes/journal.route.js";
+
 import { errorHandler } from "./middlewares/error.js";
 import { stat } from "node:fs";
 
@@ -31,6 +33,7 @@ app.get("/api/v1/health", (req, res) => {
 // === API routes === //
 
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/journal", journalRoutes);
 
 // === 404 Handler === //
 
