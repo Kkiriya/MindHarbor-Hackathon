@@ -11,6 +11,7 @@ import {
   registerSchema,
   loginSchema,
   refreshSchema,
+  logoutSchema,
 } from "../schema/auth.schema.js";
 
 const router = Router();
@@ -28,6 +29,6 @@ router.post("/login", authRateLimit, validateBody(loginSchema), login);
 
 router.post("/refresh", validateBody(refreshSchema), refresh);
 
-router.post("/logout", validateBody(refreshSchema), logout);
+router.post("/logout", validateBody(logoutSchema), logout);
 
 export default router;
