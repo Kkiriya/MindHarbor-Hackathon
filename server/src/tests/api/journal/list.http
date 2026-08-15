@@ -1,0 +1,131 @@
+@baseUrl = http://localhost:5173/api/v1
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJmZDU1ZjQ3LThkMjctNDZkYy04NzI0LWMxZWQ4ZTgwMTUxZiIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzg2ODI0MzE2LCJleHAiOjE3ODY4MjUyMTZ9.KFiRXsWEQhmZlM6zUaMZ_ZhYQGrSev6CoTORaYG_pHI
+
+
+### ============================================================
+### GET JOURNAL ENTRIES
+### ============================================================
+
+
+### List - default parameters
+GET {{baseUrl}}/journal
+Authorization: Bearer {{accessToken}}
+
+
+### List - explicit parameters
+GET {{baseUrl}}/journal?page=1&limit=20&sort=date_desc&range=30d
+Authorization: Bearer {{accessToken}}
+
+
+### List - date ascending
+GET {{baseUrl}}/journal?sort=date_asc
+Authorization: Bearer {{accessToken}}
+
+
+### List - date descending
+GET {{baseUrl}}/journal?sort=date_desc
+Authorization: Bearer {{accessToken}}
+
+
+### List - mood ascending
+GET {{baseUrl}}/journal?sort=mood_asc
+Authorization: Bearer {{accessToken}}
+
+
+### List - mood descending
+GET {{baseUrl}}/journal?sort=mood_desc
+Authorization: Bearer {{accessToken}}
+
+
+### List - minimum mood
+GET {{baseUrl}}/journal?minMood=4
+Authorization: Bearer {{accessToken}}
+
+
+### List - maximum mood
+GET {{baseUrl}}/journal?maxMood=3
+Authorization: Bearer {{accessToken}}
+
+
+### List - mood range
+GET {{baseUrl}}/journal?minMood=2&maxMood=4
+Authorization: Bearer {{accessToken}}
+
+
+### List - 7 day range
+GET {{baseUrl}}/journal?range=7d
+Authorization: Bearer {{accessToken}}
+
+
+### List - 30 day range
+GET {{baseUrl}}/journal?range=30d
+Authorization: Bearer {{accessToken}}
+
+
+### List - 90 day range
+GET {{baseUrl}}/journal?range=90d
+Authorization: Bearer {{accessToken}}
+
+
+### List - pagination
+GET {{baseUrl}}/journal?page=1&limit=1
+Authorization: Bearer {{accessToken}}
+
+
+### List - second page
+GET {{baseUrl}}/journal?page=2&limit=1
+Authorization: Bearer {{accessToken}}
+
+
+### ============================================================
+### VALIDATION
+### ============================================================
+
+
+### Invalid page
+GET {{baseUrl}}/journal?page=0
+Authorization: Bearer {{accessToken}}
+
+
+### Invalid limit - too low
+GET {{baseUrl}}/journal?limit=0
+Authorization: Bearer {{accessToken}}
+
+
+### Invalid limit - too high
+GET {{baseUrl}}/journal?limit=101
+Authorization: Bearer {{accessToken}}
+
+
+### Invalid sort
+GET {{baseUrl}}/journal?sort=invalid
+Authorization: Bearer {{accessToken}}
+
+
+### Invalid range
+GET {{baseUrl}}/journal?range=1d
+Authorization: Bearer {{accessToken}}
+
+
+### Invalid minimum mood
+GET {{baseUrl}}/journal?minMood=0
+Authorization: Bearer {{accessToken}}
+
+
+### Invalid maximum mood
+GET {{baseUrl}}/journal?maxMood=6
+Authorization: Bearer {{accessToken}}
+
+
+### ============================================================
+### AUTHENTICATION
+### ============================================================
+
+
+### Missing authentication
+GET {{baseUrl}}/journal
+
+
+### Invalid token
+GET {{baseUrl}}/journal
+Authorization: Bearer this-is-not-a-valid-token

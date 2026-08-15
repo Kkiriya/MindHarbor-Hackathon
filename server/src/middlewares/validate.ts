@@ -21,7 +21,7 @@ export const validateBody =
 
 export const validateQuery =
   (schema: ZodSchema): RequestHandler =>
-  (req, _res, next) => {
+  (req, res, next) => {
     const result = schema.safeParse(req.query);
 
     if (!result.success) {
@@ -29,11 +29,12 @@ export const validateQuery =
         field: i.path.join("."),
         message: i.message,
       }));
+
       return next(
         new AppError(422, "VALIDATION_ERROR", "Donnees invalides", details),
       );
     }
-    req.query = result.data;
+    res.locals.valiudatedQuery = result.data;
     next();
   };
 
