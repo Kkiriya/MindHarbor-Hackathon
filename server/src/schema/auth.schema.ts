@@ -27,6 +27,8 @@ export const loginSchema = z.object({
     .string()
     .email("Format de courriel invalide")
     .transform((email) => email.toLowerCase().trim()),
+
+  password: z.string().min(1, "Le mot de passe est requis."),
 });
 
 export const refreshSchema = z.object({

@@ -1,0 +1,40 @@
+@baseUrl = http://localhost:5173/api/v1
+@refreshToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJmZDU1ZjQ3LThkMjctNDZkYy04NzI0LWMxZWQ4ZTgwMTUxZiIsImlhdCI6MTc4NjgyMjMyMSwiZXhwIjoxNzg3NDI3MTIxfQ.nkmuzKqbjH7_UDRUYQ6530SPglTH1tb6LXajzL3CFzg
+
+
+### ============================================================
+### REFRESH TOKEN
+### ============================================================
+
+### Refresh - valid token
+POST {{baseUrl}}/auth/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "{{refreshToken}}"
+}
+
+
+### Refresh - invalid token
+POST {{baseUrl}}/auth/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "this-is-not-a-real-token"
+}
+
+
+### Refresh - empty token
+POST {{baseUrl}}/auth/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": ""
+}
+
+
+### Refresh - missing token
+POST {{baseUrl}}/auth/refresh
+Content-Type: application/json
+
+{}

@@ -1,0 +1,129 @@
+@baseUrl = http://localhost:5173/api/v1
+
+### Health check
+GET {{baseUrl}}/health
+
+### ============================================================
+### REGISTER
+### ============================================================
+
+### Register - valid
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "TestPassword123",
+  "username": "testuser",
+  "firstName": "Test",
+  "lastName": "User"
+}
+
+
+### Register - invalid email
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "not-an-email",
+  "password": "TestPassword123",
+  "username": "testuser2",
+  "firstName": "Test",
+  "lastName": "User"
+}
+
+
+### Register - password too short
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "shortpassword@example.com",
+  "password": "Test1",
+  "username": "testuser3",
+  "firstName": "Test",
+  "lastName": "User"
+}
+
+
+### Register - password without uppercase
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "nouppercase@example.com",
+  "password": "testpassword123",
+  "username": "testuser4",
+  "firstName": "Test",
+  "lastName": "User"
+}
+
+
+### Register - password without number
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "nonumber@example.com",
+  "password": "TestPassword",
+  "username": "testuser5",
+  "firstName": "Test",
+  "lastName": "User"
+}
+
+
+### Register - username too short
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "shortusername@example.com",
+  "password": "TestPassword123",
+  "username": "ab",
+  "firstName": "Test",
+  "lastName": "User"
+}
+
+
+### Register - missing first name
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "missingfirstname@example.com",
+  "password": "TestPassword123",
+  "username": "testuser6",
+  "lastName": "User"
+}
+
+
+### Register - missing last name
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "missinglastname@example.com",
+  "password": "TestPassword123",
+  "username": "testuser7",
+  "firstName": "Test"
+}
+
+
+### Register - missing fields
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{}
+
+
+### Register - duplicate email
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "TestPassword123",
+  "username": "differentuser",
+  "firstName": "Different",
+  "lastName": "User"
+}

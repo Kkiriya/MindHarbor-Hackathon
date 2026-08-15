@@ -1,0 +1,177 @@
+@baseUrl = http://localhost:5173/api/v1
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJmZDU1ZjQ3LThkMjctNDZkYy04NzI0LWMxZWQ4ZTgwMTUxZiIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzg2ODMwMjg2LCJleHAiOjE3ODY4MzExODZ9.IYzDkJjfdjlbz4NFSCM2qGE7MWIVxltlgd-kXQIDgs8
+
+
+### ============================================================
+### UPDATE JOURNAL ENTRY
+### ============================================================
+
+### Update mood
+PATCH {{baseUrl}}/journal/2026-08-15
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "generalMood": 5
+}
+
+
+### Update multiple fields
+PATCH {{baseUrl}}/journal/2026-08-15
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "generalMood": 4,
+  "energyLevel": 5,
+  "sleepQuality": 4,
+  "stressLevel": 2
+}
+
+
+### Update text fields
+PATCH {{baseUrl}}/journal/2026-08-15
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "keyEvents": "Updated key event",
+  "dailyGratitude": "I am grateful for today."
+}
+
+
+### Update activities
+PATCH {{baseUrl}}/journal/2026-08-15
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "activityIds": []
+}
+
+
+### Update everything
+PATCH {{baseUrl}}/journal/2026-08-15
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "generalMood": 5,
+  "energyLevel": 5,
+  "sleepQuality": 5,
+  "stressLevel": 1,
+  "activityIds": [],
+  "keyEvents": "Updated journal entry",
+  "dailyGratitude": "Something good happened today."
+}
+
+
+### ============================================================
+### VALIDATION
+### ============================================================
+
+### Invalid mood - too low
+PATCH {{baseUrl}}/journal/2026-08-15
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "generalMood": 0
+}
+
+
+### Invalid mood - too high
+PATCH {{baseUrl}}/journal/2026-08-15
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "generalMood": 6
+}
+
+
+### Invalid energy level
+PATCH {{baseUrl}}/journal/2026-08-15
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "energyLevel": 6
+}
+
+
+### Empty key events
+PATCH {{baseUrl}}/journal/2026-08-15
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "keyEvents": ""
+}
+
+
+### Invalid activity UUID
+PATCH {{baseUrl}}/journal/2026-08-15
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "activityIds": [
+    "not-a-uuid"
+  ]
+}
+
+
+### Empty body
+PATCH {{baseUrl}}/journal/2026-08-15
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{}
+
+
+### ============================================================
+### DATE VALIDATION
+### ============================================================
+
+### Invalid date format
+PATCH {{baseUrl}}/journal/15-08-2026
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "generalMood": 4
+}
+
+
+### Non-existent entry
+PATCH {{baseUrl}}/journal/2026-08-14
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "generalMood": 4
+}
+
+
+### ============================================================
+### AUTHENTICATION
+### ============================================================
+
+### Missing token
+PATCH {{baseUrl}}/journal/2026-08-15
+Content-Type: application/json
+
+{
+  "generalMood": 4
+}
+
+
+### Invalid token
+PATCH {{baseUrl}}/journal/2026-08-15
+Authorization: Bearer invalid-token
+Content-Type: application/json
+
+{
+  "generalMood": 4
+}

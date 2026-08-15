@@ -1,0 +1,68 @@
+@baseUrl = http://localhost:5173/api/v1
+
+### ============================================================
+### LOGIN
+### ============================================================
+
+### Login - valid credentials
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "TestPassword123"
+}
+
+### Login - wrong password
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "WrongPassword123"
+}
+
+
+### Login - unknown email
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "doesnotexist@example.com",
+  "password": "TestPassword123"
+}
+
+
+### Login - invalid email
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "not-an-email",
+  "password": "TestPassword123"
+}
+
+
+### Login - missing password
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com"
+}
+
+
+### Login - missing email
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "password": "TestPassword123"
+}
+
+
+### Login - empty body
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{}

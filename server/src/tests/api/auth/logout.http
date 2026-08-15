@@ -1,0 +1,39 @@
+@baseUrl = http://localhost:5173/api/v1
+@refreshToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJmZDU1ZjQ3LThkMjctNDZkYy04NzI0LWMxZWQ4ZTgwMTUxZiIsImlhdCI6MTc4NjgyMjMyMSwiZXhwIjoxNzg3NDI3MTIxfQ.nkmuzKqbjH7_UDRUYQ6530SPglTH1tb6LXajzL3CFzg
+
+### ============================================================
+### LOGOUT
+### ============================================================
+
+### Logout - valid refresh token
+POST {{baseUrl}}/auth/logout
+Content-Type: application/json
+
+{
+  "refreshToken": "{{refreshToken}}"
+}
+
+
+### Logout - invalid refresh token
+POST {{baseUrl}}/auth/logout
+Content-Type: application/json
+
+{
+  "refreshToken": "this-is-not-a-valid-refresh-token"
+}
+
+
+### Logout - empty refresh token
+POST {{baseUrl}}/auth/logout
+Content-Type: application/json
+
+{
+  "refreshToken": ""
+}
+
+
+### Logout - missing refresh token
+POST {{baseUrl}}/auth/logout
+Content-Type: application/json
+
+{}

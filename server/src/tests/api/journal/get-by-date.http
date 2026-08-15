@@ -1,0 +1,35 @@
+@baseUrl = http://localhost:5173/api/v1
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJmZDU1ZjQ3LThkMjctNDZkYy04NzI0LWMxZWQ4ZTgwMTUxZiIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzg2ODI1MDQ1LCJleHAiOjE3ODY4MjU5NDV9.sxjSNupirMbPQ5JTB66KKYq3AGZMfaz0eOPc0wU7CQ8
+
+
+### ============================================================
+### GET JOURNAL ENTRY BY DATE
+### ============================================================
+
+### Existing entry
+GET {{baseUrl}}/journal/2026-08-15
+Authorization: Bearer {{accessToken}}
+
+
+### Entry does not exist
+GET {{baseUrl}}/journal/2026-08-14
+Authorization: Bearer {{accessToken}}
+
+
+### Invalid date format
+GET {{baseUrl}}/journal/15-08-2026
+Authorization: Bearer {{accessToken}}
+
+
+### Invalid date
+GET {{baseUrl}}/journal/2026-99-99
+Authorization: Bearer {{accessToken}}
+
+
+### Missing authentication
+GET {{baseUrl}}/journal/2026-08-15
+
+
+### Invalid authentication
+GET {{baseUrl}}/journal/2026-08-15
+Authorization: Bearer invalid-token
