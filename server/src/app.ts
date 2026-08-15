@@ -4,7 +4,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 
 import authRoutes from "./routes/auth.routes.js";
-import journalRoutes from "./routes/journal.route.js";
+import journalRoutes from "./routes/journal.routes.js";
 
 import { errorHandler } from "./middlewares/error.js";
 
