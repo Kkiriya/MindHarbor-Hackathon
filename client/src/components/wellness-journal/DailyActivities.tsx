@@ -1,21 +1,17 @@
 import styles from "./WellnessJournal.module.css";
 import type {Activity} from "../../types/WellnessJournalTypes.ts";
 
-interface ActivitiesProps {
+interface Props {
     activities: Activity[];
     selectedActivitiesId: string[];
     onChange: (activityId: string, checked: boolean) => void;
 }
 
-//TODO Find a way to have a description of the activities. There is a one in the db table.
-// Maybe a mouse hover on the label to show the description ?
-// Exercice: Même une courte marche comptent ?
-
 export default function DailyActivities({
     activities,
     selectedActivitiesId,
     onChange,
-}: ActivitiesProps) {
+}: Props) {
     return (
         <section className={styles.dailyActivities}>
             <fieldset className={styles.activitiesGrid}>

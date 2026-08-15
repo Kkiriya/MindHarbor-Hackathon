@@ -6,14 +6,14 @@ import type {JournalEntryData} from "../../types/WellnessJournalTypes.ts";
  * @property data The current journal data.
  * @property onChange A callback used to update one wellness value.
  */
-interface GeneralWellnessProps {
+interface Props {
     data: JournalEntryData;
     onChange: (field: keyof JournalEntryData, value: number) => void;
 }
 
 //TODO Check if there is a way to have a kind of array of inputs so it don't repeat as much
 
-export default function GeneralWellness({data, onChange}: GeneralWellnessProps) {
+export default function GeneralWellness({data, onChange}: Props) {
     return (
         <section>
             <h3>Humeur Générale</h3>
