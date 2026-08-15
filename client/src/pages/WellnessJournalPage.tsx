@@ -9,38 +9,6 @@ import type {Activity, JournalEntryData, JournalEntry} from "../types/WellnessJo
 import {useAuth} from "../context/AuthContext.tsx";
 import axios from "axios";
 
-const placeholderActivities: Activity[] = [
-    {
-        activityId: "a1b2c3d4-0001-4000-8000-000000000001",
-        name: "Exercice",
-        desc: "Même une courte marche ou quelques étirements comptent!",
-    },
-    {
-        activityId: "a1b2c3d4-0002-4000-8000-000000000002",
-        name: "Méditation",
-        desc: "Quelques minutes pour respirer et recentrer ton attention.",
-    },
-    {
-        activityId: "a1b2c3d4-0003-4000-8000-000000000003",
-        name: "Lecture",
-        desc: "Un livre, un article ou une bande dessinée : tout compte.",
-    },
-    {
-        activityId: "a1b2c3d4-0004-4000-8000-000000000004",
-        name: "Activités sociales",
-        desc: "Une conversation ou un moment passé avec quelqu’un.",
-    },
-    {
-        activityId: "a1b2c3d4-0005-4000-8000-000000000005",
-        name: "Loisirs",
-        desc: "Une activité pratiquée simplement pour le plaisir.",
-    },
-    {
-        activityId: "a1b2c3d4-0006-4000-8000-000000000006",
-        name: "Repos",
-        desc: "Prendre une vraie pause est aussi bénéfique.",
-    },
-];
 
 /**
  * WellnessJournalPage component that renders the wellness journal page.
@@ -61,6 +29,7 @@ export default function WellnessJournalPage() {
 
     const {token} = useAuth();
     const [previousEntries, setPreviousEntries] = useState<JournalEntry[]>([]);
+    const [activities, setActivities] = useState<Activity[]>([]);
 
     useEffect(() => {
         async function loadPreviousEntries() {
@@ -88,6 +57,34 @@ export default function WellnessJournalPage() {
         }
 
         loadPreviousEntries();
+    }, [token]);
+
+    useEffect(() => {
+        async function loadActivities() {
+            if (!token) {
+                return;
+            }
+
+            try {
+                const response = await axios.get(
+                    "http://localhost:3000/api/v1/activities",
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+
+                setActivities(response.data.data);
+            } catch (error) {
+                console.error(
+                    "Unable to load activities:",
+                    error
+                );
+            }
+        }
+
+        loadActivities();
     }, [token]);
 
     /**
@@ -151,7 +148,7 @@ export default function WellnessJournalPage() {
             />
 
             <DailyActivities
-                activities={placeholderActivities}
+                activities={activities}
                 selectedActivitiesId={selectedActivitiesId}
                 onChange={handleActivityChange}
             />

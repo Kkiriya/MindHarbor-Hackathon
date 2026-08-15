@@ -5,6 +5,7 @@ import morgan from "morgan";
 
 import authRoutes from "./routes/auth.routes.js";
 import journalRoutes from "./routes/journal.routes.js";
+import activityRoutes from "./routes/activity.routes.js";
 
 import { errorHandler } from "./middlewares/error.js";
 
@@ -33,6 +34,7 @@ app.get("/api/v1/health", (req, res) => {
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/journal", journalRoutes);
+app.use("/api/v1/activities", activityRoutes);
 
 // === 404 Handler === //
 
