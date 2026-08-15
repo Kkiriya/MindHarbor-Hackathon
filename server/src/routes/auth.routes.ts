@@ -13,6 +13,7 @@ import {
   refreshSchema,
   logoutSchema,
 } from "../schema/auth.schema.js";
+import { requireAuth } from "../middlewares/auth.js";
 
 const router = Router();
 
