@@ -38,13 +38,6 @@ function isToday(date: Date): boolean {
   );
 }
 
-function isBeforeMidnight(): boolean {
-  const now = new Date();
-  const tomorrow = new Date(now);
-  tomorrow.setHours(24, 0, 0, 0);
-  return now < tomorrow;
-}
-
 // GET /journal
 export const getJournalEntries: RequestHandler = async (req, res, next) => {
   try {
@@ -304,24 +297,43 @@ export const updateJournalEntry: RequestHandler = async (req, res, next) => {
       },
 
       data: {
-        generalMood: data.generalMood,
-        energyLevel: data.energyLevel,
-        sleepQuality: data.sleepQuality,
-        stressLevel: data.stressLevel,
-        keyEvents: data.keyEvents,
-        dailyGratitude: data.dailyGratitude ?? null,
+        ...(data.generalMood !== undefined && {
+          generalMood: data.generalMood,
+        }),
 
-        journalActivities: {
-          deleteMany: {},
+        ...(data.energyLevel !== undefined && {
+          energyLevel: data.energyLevel,
+        }),
 
-          create: data.activityIds.map((activityId) => ({
-            activity: {
-              connect: {
-                activityId,
+        ...(data.sleepQuality !== undefined && {
+          sleepQuality: data.sleepQuality,
+        }),
+
+        ...(data.stressLevel !== undefined && {
+          stressLevel: data.stressLevel,
+        }),
+
+        ...(data.keyEvents !== undefined && {
+          keyEvents: data.keyEvents,
+        }),
+
+        ...(data.dailyGratitude !== undefined && {
+          dailyGratitude: data.dailyGratitude,
+        }),
+
+        ...(data.activityIds !== undefined && {
+          journalActivities: {
+            deleteMany: {},
+
+            create: data.activityIds.map((activityId) => ({
+              activity: {
+                connect: {
+                  activityId,
+                },
               },
-            },
-          })),
-        },
+            })),
+          },
+        }),
       },
 
       include: {
