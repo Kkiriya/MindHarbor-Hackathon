@@ -1,0 +1,24 @@
+@baseUrl = http://localhost:5173/api/v1
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJmZDU1ZjQ3LThkMjctNDZkYy04NzI0LWMxZWQ4ZTgwMTUxZiIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzg2ODMwNTE5LCJleHAiOjE3ODY4MzE0MTl9.5ZzNZTsoCtzVOyFqN0DRaDbHWHnycBbbbHraLuCrsjs
+
+
+### ============================================================
+### JOURNAL INSIGHTS
+### ============================================================
+
+### Get insights
+GET {{baseUrl}}/journal/insights
+Authorization: Bearer {{accessToken}}
+
+
+### ============================================================
+### AUTHENTICATION
+### ============================================================
+
+### Missing token
+GET {{baseUrl}}/journal/insights
+
+
+### Invalid token
+GET {{baseUrl}}/journal/insights
+Authorization: Bearer invalid-token
