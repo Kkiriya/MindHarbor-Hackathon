@@ -28,6 +28,6 @@ router.post("/login", authRateLimit, validateBody(loginSchema), login);
 
 router.post("/refresh", validateBody(refreshSchema), refresh);
 
-router.post("/lgout", validateBody(refreshSchema), logout);
+router.post("/logout", validateBody(refreshSchema), logout);
 
 export default router;
