@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { prisma } from "../lib/prisma.js";
 import { AppError } from "../middlewares/error.js";
 import { UserRole } from "../../generated/prisma/enums.js";
+import { tr } from "zod/locales";
 
 type RegisterBody = {
   email: string;
@@ -375,6 +376,42 @@ export const logout: RequestHandler = async (req, res, next) => {
         "Jeton de rafraîchissement invalide.",
       ),
     );
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export const getMe: RequestHandler = async (req, res, next) => {
+  try {
+    const userId = req.user!.id;
+
+    const user = await prisma.user.findUnique({
+      where: {
+        userId,
+      },
+      select: {
+        userId: true,
+        email: true,
+        username: true,
+        firstName: true,
+        lastName: true,
+        role: true,
+        visibilityLevel: true,
+        privateMessageLevel: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+
+    if (!user) {
+      return next(
+        new AppError(404, "USER_NOT_FOUND", "Utilisateur introuvable."),
+      );
+    }
+
+    return res.status(200).json({
+      data: user,
+    });
   } catch (error) {
     return next(error);
   }
