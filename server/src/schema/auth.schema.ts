@@ -1,4 +1,3 @@
-import type { log } from "node:console";
 import { z } from "zod/v3";
 
 export const registerSchema = z.object({

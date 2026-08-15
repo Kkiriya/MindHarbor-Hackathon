@@ -7,7 +7,6 @@ import authRoutes from "./routes/auth.routes.js";
 import journalRoutes from "./routes/journal.route.js";
 
 import { errorHandler } from "./middlewares/error.js";
-import { stat } from "node:fs";
 
 const app = express();
 

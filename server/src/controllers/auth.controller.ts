@@ -4,10 +4,6 @@ import jwt from "jsonwebtoken";
 import { prisma } from "../lib/prisma.js";
 import { AppError } from "../middlewares/error.js";
 import { UserRole } from "../../generated/prisma/enums.js";
-import { error } from "node:console";
-import { tr } from "zod/locales";
-import { create } from "node:domain";
-import { nextTick, ref } from "node:process";
 
 type RegisterBody = {
   email: string;
