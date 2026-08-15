@@ -1,10 +1,19 @@
 import styles from "./WellnessJournal.module.css";
 
-export default function SignificantEvents() {
+interface Props {
+    value: string;
+    onChange: (value: string) => void;
+}
+
+export default function SignificantEvents({value, onChange}: Props) {
     return (
         <section>
             <h3>Événements marquants</h3>
-            <textarea className={styles.textarea}/>
+            <textarea
+                className={styles.textarea}
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+            />
         </section>
     );
 }
