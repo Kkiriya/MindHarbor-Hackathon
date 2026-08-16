@@ -26,10 +26,10 @@ export default function Header() {
                 {email, password},
             );
 
-            const {accesToken} = response.data.data;
+            const {accesToken, user} = response.data.data;
 
             // The context stores the token and shares it with the rest of the app.
-            login(accesToken);
+            login(accesToken, user);
             setShowLogin(false);
             setPassword("");
         } catch {

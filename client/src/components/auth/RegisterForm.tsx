@@ -36,10 +36,10 @@ export default function RegisterForm({onCancel, onSuccess}: Props) {
                 {email, password},
             );
 
-            const {accesToken} = loginResponse.data.data;
+            const {accesToken, user} = loginResponse.data.data;
 
             // Register token in AuthContext
-            login(accesToken)
+            login(accesToken, user)
 
             onSuccess();
 
