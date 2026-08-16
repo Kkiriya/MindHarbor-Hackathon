@@ -34,7 +34,14 @@ export const validateQuery =
         new AppError(422, "VALIDATION_ERROR", "Donnees invalides", details),
       );
     }
-    res.locals.valiudatedQuery = result.data;
+    // Express 5 exposes req.query through a getter, so it cannot be assigned
+    // directly. Define the validated query on this request instead.
+    Object.defineProperty(req, "query", {
+      value: result.data,
+      writable: true,
+      configurable: true,
+      enumerable: true,
+    });
     next();
   };
 

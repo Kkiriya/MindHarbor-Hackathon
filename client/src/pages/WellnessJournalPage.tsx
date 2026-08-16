@@ -1,136 +1,205 @@
-import GeneralWellness from "../components/wellness-journal/GeneralWellness.tsx";
-import PreviousEntries from "../components/wellness-journal/PreviousEntries.tsx";
-import DailyActivities from "../components/wellness-journal/DailyActivities.tsx";
-import SignificantEvents from "../components/wellness-journal/SignificantEvents.tsx";
-import Gratitude from "../components/wellness-journal/Gratitude.tsx";
+import { useEffect, useState } from "react";
+import GeneralWellness from "../components/wellness-journal/GeneralWellness";
+import PreviousEntries from "../components/wellness-journal/PreviousEntries";
+import DailyActivities from "../components/wellness-journal/DailyActivities";
+import SignificantEvents from "../components/wellness-journal/SignificantEvents";
+import Gratitude from "../components/wellness-journal/Gratitude";
 import styles from "./WellnessJournal.module.css";
-import {useState} from "react";
-import type {Activity, JournalEntryData} from "../types/WellnessJournalTypes.ts";
+import type { Activity, JournalEntry, JournalEntryData } from "../types/WellnessJournalTypes";
+import { createJournalEntry, getJournalEntries } from "../api/journal";
+import { getActivities } from "../api/activities";
+import { useAuth } from "../hooks/useAuth";
 
-const placeholderActivities: Activity[] = [
-    {
-        activityId: "a1b2c3d4-0001-4000-8000-000000000001",
-        name: "Exercice",
-        desc: "Même une courte marche ou quelques étirements comptent!",
-    },
-    {
-        activityId: "a1b2c3d4-0002-4000-8000-000000000002",
-        name: "Méditation",
-        desc: "Quelques minutes pour respirer et recentrer ton attention.",
-    },
-    {
-        activityId: "a1b2c3d4-0003-4000-8000-000000000003",
-        name: "Lecture",
-        desc: "Un livre, un article ou une bande dessinée : tout compte.",
-    },
-    {
-        activityId: "a1b2c3d4-0004-4000-8000-000000000004",
-        name: "Activités sociales",
-        desc: "Une conversation ou un moment passé avec quelqu’un.",
-    },
-    {
-        activityId: "a1b2c3d4-0005-4000-8000-000000000005",
-        name: "Loisirs",
-        desc: "Une activité pratiquée simplement pour le plaisir.",
-    },
-    {
-        activityId: "a1b2c3d4-0006-4000-8000-000000000006",
-        name: "Repos",
-        desc: "Prendre une vraie pause est aussi bénéfique.",
-    },
-];
+function getLocalDate(): string {
+  const now = new Date();
+  return [
+    now.getFullYear(),
+    String(now.getMonth() + 1).padStart(2, "0"),
+    String(now.getDate()).padStart(2, "0"),
+  ].join("-");
+}
 
-/**
- * WellnessJournalPage component that renders the wellness journal page.
- * journalData must have the same structure as JournalEntryData type.
- * @constructor
- */
 export default function WellnessJournalPage() {
-    const [journalData, setJournalData] = useState<JournalEntryData>({
-        energyLevel: 0,
-        generalMood: 0,
-        sleepQuality: 0,
-        stressLevel: 0,
-        keyEvents: "",
-        dailyGratitude: "",
-    });
+  const { isLoggedIn } = useAuth();
+  const [journalData, setJournalData] = useState<JournalEntryData>({
+    energyLevel: 0,
+    generalMood: 0,
+    sleepQuality: 0,
+    stressLevel: 0,
+    keyEvents: "",
+    dailyGratitude: "",
+  });
+  const [selectedActivitiesId, setSelectedActivitiesId] = useState<string[]>([]);
+  const [previousEntries, setPreviousEntries] = useState<JournalEntry[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [activities, setActivities] = useState<Activity[]>([]);
+  const [entriesRefresh, setEntriesRefresh] = useState(0);
+  const [saveMessage, setSaveMessage] = useState("");
+  const [saveError, setSaveError] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
+  const [isLoadingEntries, setIsLoadingEntries] = useState(false);
+  const [isLoadingActivities, setIsLoadingActivities] = useState(false);
 
-    const [selectedActivitiesId, setSelectedActivitiesId] = useState<string[]>([]);
+  useEffect(() => {
+    async function loadPreviousEntries() {
+      if (!isLoggedIn) {
+        return;
+      }
 
-    /**
-     * Handles changes to the wellness data state.
-     * @param field The field of the wellness data to update.
-     * @param value The new value for the specified field.
-     */
-    function handleWellnessChange(field: keyof JournalEntryData, value: number) {
-        setJournalData((currentData) => ({
-            // Spread the current data to keep other fields unchanged
-            ...currentData,
-            [field]: value,
-        }));
+      setIsLoadingEntries(true);
+      try {
+        const response = await getJournalEntries({ page: currentPage, limit: 5 });
+        setPreviousEntries(response.data);
+        setTotalPages(response.meta.totalPages);
+      } catch {
+        setSaveError("Impossible de charger l'historique.");
+      } finally {
+        setIsLoadingEntries(false);
+      }
     }
 
-    /**
-     * Handles changes to the selected activities state.
-     * @param activityId The ID of the activity that was changed.
-     * @param checked A boolean indicating whether the activity was selected (true) or deselected (false).
-     */
-    function handleActivityChange (activityId: string, checked: boolean) {
-        setSelectedActivitiesId((currentIds) =>
-            checked
-                ? [...currentIds, activityId]
-                : currentIds.filter((id) => id !== activityId)
-        );
-    }
-    function handleSignificantEventsChange(value: string) {
-        setJournalData((currentData) => ({
-            ...currentData,
-            keyEvents: value,
-        }));
-    }
+    void loadPreviousEntries();
+  }, [currentPage, entriesRefresh, isLoggedIn]);
 
-    function handleGratitudeChange(value: string) {
-        setJournalData((currentData) => ({
-            ...currentData,
-            dailyGratitude: value,
-        }));
+  useEffect(() => {
+    async function loadActivities() {
+      if (!isLoggedIn) {
+        return;
+      }
+
+      setIsLoadingActivities(true);
+      try {
+        setActivities(await getActivities());
+      } catch {
+        setSaveError("Impossible de charger les activités.");
+      } finally {
+        setIsLoadingActivities(false);
+      }
     }
 
-    function handleSave() {
-        console.log("Données du journal à enregistrer :", journalData);
+    void loadActivities();
+  }, [isLoggedIn]);
+
+  function handlePreviousPage() {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+  }
+
+  function handleNextPage() {
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
+  }
+
+  function handleWellnessChange(field: keyof JournalEntryData, value: number) {
+    setJournalData((currentData) => ({
+      ...currentData,
+      [field]: value,
+    }));
+  }
+
+  function handleActivityChange(activityId: string, checked: boolean) {
+    setSelectedActivitiesId((currentIds) =>
+      checked ? [...currentIds, activityId] : currentIds.filter((id) => id !== activityId),
+    );
+  }
+
+  async function handleSave() {
+    if (!isLoggedIn) {
+      setSaveError("Connecte-toi pour enregistrer ton journal.");
+      return;
     }
 
-    return (
-        <main className={styles.wellnessJournal}>
-            <header>
-                <h1>Journal de bien-être</h1>
-                <time>{new Date().toLocaleDateString()}</time>
-            </header>
+    setSaveMessage("");
+    setSaveError("");
+    setIsSaving(true);
 
-            <GeneralWellness
-                data={journalData}
-                onChange={handleWellnessChange}
-            />
+    try {
+      await createJournalEntry(getLocalDate(), journalData, selectedActivitiesId);
+      setSaveMessage("Entrée enregistrée avec succès.");
+      setCurrentPage(1);
+      setEntriesRefresh((currentValue) => currentValue + 1);
+    } catch {
+      setSaveError("Impossible d'enregistrer ton entrée aujourd'hui.");
+    } finally {
+      setIsSaving(false);
+    }
+  }
 
-            <DailyActivities
-                activities={placeholderActivities}
-                selectedActivitiesId={selectedActivitiesId}
-                onChange={handleActivityChange}
-            />
+  return (
+    <main className={styles.wellnessJournal}>
+      <header>
+        <h1>Journal de bien-être</h1>
+        <time>{new Date().toLocaleDateString()}</time>
+      </header>
 
-            <SignificantEvents
-                value={journalData.keyEvents}
-                onChange={handleSignificantEventsChange}
-            />
+      {!isLoggedIn && (
+        <p className={styles.errorMessage}>
+          Connecte-toi pour remplir ton journal et voir ton historique.
+        </p>
+      )}
 
-            <Gratitude
-                value={journalData.dailyGratitude}
-                onChange={handleGratitudeChange}
-            />
+      {isLoggedIn && <GeneralWellness data={journalData} onChange={handleWellnessChange} />}
 
-            <button type="button" onClick={handleSave}>Enregistrer</button>
-            <PreviousEntries/>
+      {isLoggedIn && isLoadingActivities ? (
+        <p>Chargement des activités...</p>
+      ) : isLoggedIn ? (
+        <DailyActivities
+          activities={activities}
+          selectedActivitiesId={selectedActivitiesId}
+          onChange={handleActivityChange}
+        />
+      ) : null}
 
-        </main>
-    )
+      {isLoggedIn ? (
+        <>
+          <SignificantEvents
+            value={journalData.keyEvents}
+            onChange={(value) =>
+              setJournalData((currentData) => ({
+                ...currentData,
+                keyEvents: value,
+              }))
+            }
+          />
+
+          <Gratitude
+            value={journalData.dailyGratitude}
+            onChange={(value) =>
+              setJournalData((currentData) => ({
+                ...currentData,
+                dailyGratitude: value,
+              }))
+            }
+          />
+
+          <button type="button" onClick={() => void handleSave()} disabled={isSaving}>
+            {isSaving ? "Enregistrement..." : "Enregistrer"}
+          </button>
+        </>
+      ) : null}
+
+      {saveMessage && (
+        <p className={styles.successMessage} role="status">
+          {saveMessage}
+        </p>
+      )}
+
+      {saveError && (
+        <p className={styles.errorMessage} role="alert">
+          {saveError}
+        </p>
+      )}
+
+      {isLoggedIn && isLoadingEntries ? (
+        <p>Chargement de l'historique...</p>
+      ) : isLoggedIn ? (
+        <PreviousEntries
+          entries={previousEntries}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPrevious={handlePreviousPage}
+          onNext={handleNextPage}
+        />
+      ) : null}
+    </main>
+  );
 }

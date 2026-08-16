@@ -26,7 +26,7 @@ export default function DailyActivities({
                         checked={selectedActivitiesId.includes(activity.activityId)}
                         onChange={(e) => onChange(activity.activityId, e.target.checked)}
                     />
-                    <span title={activity.desc}>{activity.name}</span>
+                    <span title={activity.desc ?? undefined}>{activity.name}</span>
                 </label>
             ))}
             </fieldset>
