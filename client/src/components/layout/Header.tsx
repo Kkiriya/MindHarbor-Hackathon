@@ -22,7 +22,7 @@ export default function Header() {
       const authData = await loginRequest({ email, password });
       login(
         {
-          accessToken: authData.accesToken,
+          accessToken: authData.accessToken,
           refreshToken: authData.refreshToken,
         },
         authData.user,
