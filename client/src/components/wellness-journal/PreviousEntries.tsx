@@ -3,6 +3,10 @@ import type {JournalEntry} from "../../types/WellnessJournalTypes.ts";
 
 interface Props {
     entries: JournalEntry[];
+    currentPage: number;
+    totalPages: number;
+    onPrevious: () => void;
+    onNext: () => void;
 }
 
 const dateFormatter = new Intl.DateTimeFormat("fr-CA", {
@@ -12,7 +16,14 @@ const dateFormatter = new Intl.DateTimeFormat("fr-CA", {
     year: "numeric",
 });
 
-export default function PreviousEntries({entries}: Props) {
+export default function PreviousEntries(
+    {
+        entries,
+        currentPage,
+        totalPages,
+        onPrevious,
+        onNext
+    }: Props) {
     return (
         <section className={styles.group}>
             <h3>Entrées antérieures</h3>
@@ -53,12 +64,19 @@ export default function PreviousEntries({entries}: Props) {
                 </table>
             </div>
 
-            <nav className={styles.pagination} aria-label="Pagination des entrées">
-                <button type="button" disabled>
+            <nav className={styles.pagination}
+                 aria-label="Pagination des entrées">
+                <button
+                    type="button"
+                onClick={onPrevious}
+                disabled={currentPage <= 1}>
                     Précédent
                 </button>
-                <span>Page 1 de 3</span>
-                <button type="button">
+                <span>Page {currentPage} de {totalPages}</span>
+                <button
+                    type="button"
+                    onClick={onNext}
+                    disabled={currentPage >= totalPages}>
                     Suivant
                 </button>
             </nav>

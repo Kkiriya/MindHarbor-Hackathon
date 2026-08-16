@@ -29,6 +29,8 @@ export default function WellnessJournalPage() {
 
     const {token} = useAuth();
     const [previousEntries, setPreviousEntries] = useState<JournalEntry[]>([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
     const [activities, setActivities] = useState<Activity[]>([]);
 
     useEffect(() => {
@@ -44,10 +46,15 @@ export default function WellnessJournalPage() {
                         headers: {
                             Authorization: `Bearer ${token}`,
                         },
+                        params: {
+                            page: currentPage,
+                            limit: 5,
+                        }
                     }
                 );
 
                 setPreviousEntries(response.data.data);
+                setTotalPages(response.data.meta.totalPages);
             } catch (error) {
                 console.error(
                     "Unable to load previous entries:",
@@ -57,7 +64,15 @@ export default function WellnessJournalPage() {
         }
 
         loadPreviousEntries();
-    }, [token]);
+    }, [token, currentPage]);
+
+    function handlePreviousPage() {
+        setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+    }
+
+    function handleNextPage() {
+        setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
+    }
 
     useEffect(() => {
         async function loadActivities() {
@@ -165,7 +180,13 @@ export default function WellnessJournalPage() {
 
             <button type="button" onClick={handleSave}>Enregistrer</button>
 
-            <PreviousEntries entries={previousEntries}/>
+            <PreviousEntries
+                entries={previousEntries}
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPrevious={handlePreviousPage}
+                onNext={handleNextPage}
+            />
 
         </main>
     )
