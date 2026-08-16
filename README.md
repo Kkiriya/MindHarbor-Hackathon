@@ -13,8 +13,44 @@
 
 ## Installation
 
+**Clone the repo**
+```bash
+git https://github.com/Kkiriya/MindHarbor-Hackathon
+cd MindHarbor-Hackathon
 ```
-a faire
+
+**Install dependencies**
+```bash
+npm install
+```
+
+**Set up the environment variables**
+use the .env.example to set them up
+
+**Generate prisma Client**
+```bash
+npx prisma generate
+```
+
+**Set up the database**
+```bash
+npx prisma deploy
+```
+
+**For demo, Seed the db**
+```bash
+npm run seed
+```
+**launch the backend server**
+```bash
+cd server
+npm run dev
+```
+
+**launch the frontend server**
+```
+cd client
+npm run dev
 ```
 
 ## Variables d'environment
