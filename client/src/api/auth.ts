@@ -5,7 +5,7 @@ type ApiData<T> = { data: T };
 
 type LoginResponse = {
   user: AuthUser;
-  accesToken: string;
+  accessToken: string;
   refreshToken: string;
 };
 
