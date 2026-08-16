@@ -1,5 +1,4 @@
-import './App.css'
-import {Routes, Route} from "react-router-dom";
+import {Navigate, Route, Routes} from "react-router-dom";
 import PersonalDashboardPage from "./pages/PersonalDashboardPage.tsx";
 import WellnessJournalPage from "./pages/WellnessJournalPage.tsx";
 import AnalysisPage from "./pages/AnalysisPage.tsx";
@@ -12,6 +11,7 @@ function App() {
         <>
             <Header/>
             <Routes>
+                <Route path="/" element={<Navigate to="/personal-dashboard" replace/>}/>
                 <Route path="/personal-dashboard" element={<PersonalDashboardPage/>}/>
                 <Route path="/wellness-journal" element={<WellnessJournalPage/>}/>
                 <Route path="/analysis" element={<AnalysisPage/>}/>
