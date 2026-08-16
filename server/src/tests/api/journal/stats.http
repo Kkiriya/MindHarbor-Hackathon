@@ -1,0 +1,58 @@
+@baseUrl = http://localhost:5173/api/v1
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJmZDU1ZjQ3LThkMjctNDZkYy04NzI0LWMxZWQ4ZTgwMTUxZiIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzg2ODMwNDE4LCJleHAiOjE3ODY4MzEzMTh9.oDQmj6EdP8-Ub5EN8v6i37bh5Aio0KF7S5w7MDB5LHc
+
+
+### ============================================================
+### JOURNAL STATS
+### ============================================================
+
+### Default range
+GET {{baseUrl}}/journal/stats
+Authorization: Bearer {{accessToken}}
+
+
+### 7 days
+GET {{baseUrl}}/journal/stats?range=7d
+Authorization: Bearer {{accessToken}}
+
+
+### 30 days
+GET {{baseUrl}}/journal/stats?range=30d
+Authorization: Bearer {{accessToken}}
+
+
+### 90 days
+GET {{baseUrl}}/journal/stats?range=90d
+Authorization: Bearer {{accessToken}}
+
+
+### ============================================================
+### VALIDATION
+### ============================================================
+
+### Invalid range
+GET {{baseUrl}}/journal/stats?range=1d
+Authorization: Bearer {{accessToken}}
+
+
+### Invalid range
+GET {{baseUrl}}/journal/stats?range=365d
+Authorization: Bearer {{accessToken}}
+
+
+### Empty range
+GET {{baseUrl}}/journal/stats?range=
+Authorization: Bearer {{accessToken}}
+
+
+### ============================================================
+### AUTHENTICATION
+### ============================================================
+
+### Missing token
+GET {{baseUrl}}/journal/stats
+
+
+### Invalid token
+GET {{baseUrl}}/journal/stats
+Authorization: Bearer invalid-token

@@ -1,0 +1,238 @@
+@baseUrl = http://localhost:5173/api/v1
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJmZDU1ZjQ3LThkMjctNDZkYy04NzI0LWMxZWQ4ZTgwMTUxZiIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzg2ODIzNTEzLCJleHAiOjE3ODY4MjQ0MTN9.hgUg-raK8KHnoVI6x1GM_nXBIXHsyhQziOAWy73v4Jk
+
+
+### ============================================================
+### CREATE JOURNAL ENTRY
+### ============================================================
+
+
+### Create - valid entry
+POST {{baseUrl}}/journal
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "date": "2026-08-15",
+  "generalMood": 4,
+  "energyLevel": 4,
+  "sleepQuality": 3,
+  "stressLevel": 2,
+  "activityIds": [],
+  "keyEvents": "Had a productive day working on the project.",
+  "dailyGratitude": "Grateful for making good progress today."
+}
+
+
+### Create - missing authentication
+POST {{baseUrl}}/journal
+Content-Type: application/json
+
+{
+  "date": "2026-08-15",
+  "generalMood": 4,
+  "energyLevel": 4,
+  "sleepQuality": 3,
+  "stressLevel": 2,
+  "activityIds": [],
+  "keyEvents": "Test entry."
+}
+
+
+### Create - invalid token
+POST {{baseUrl}}/journal
+Authorization: Bearer this-is-not-a-valid-token
+Content-Type: application/json
+
+{
+  "date": "2026-08-15",
+  "generalMood": 4,
+  "energyLevel": 4,
+  "sleepQuality": 3,
+  "stressLevel": 2,
+  "activityIds": [],
+  "keyEvents": "Test entry."
+}
+
+
+### Create - invalid date format
+POST {{baseUrl}}/journal
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "date": "15-08-2026",
+  "generalMood": 4,
+  "energyLevel": 4,
+  "sleepQuality": 3,
+  "stressLevel": 2,
+  "activityIds": [],
+  "keyEvents": "Test entry."
+}
+
+
+### Create - future date
+POST {{baseUrl}}/journal
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "date": "2026-08-16",
+  "generalMood": 4,
+  "energyLevel": 4,
+  "sleepQuality": 3,
+  "stressLevel": 2,
+  "activityIds": [],
+  "keyEvents": "Test entry."
+}
+
+
+### Create - past date
+POST {{baseUrl}}/journal
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "date": "2026-08-14",
+  "generalMood": 4,
+  "energyLevel": 4,
+  "sleepQuality": 3,
+  "stressLevel": 2,
+  "activityIds": [],
+  "keyEvents": "Test entry."
+}
+
+
+### Create - mood too low
+POST {{baseUrl}}/journal
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "date": "2026-08-15",
+  "generalMood": 0,
+  "energyLevel": 4,
+  "sleepQuality": 3,
+  "stressLevel": 2,
+  "activityIds": [],
+  "keyEvents": "Test entry."
+}
+
+
+### Create - mood too high
+POST {{baseUrl}}/journal
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "date": "2026-08-15",
+  "generalMood": 6,
+  "energyLevel": 4,
+  "sleepQuality": 3,
+  "stressLevel": 2,
+  "activityIds": [],
+  "keyEvents": "Test entry."
+}
+
+
+### Create - decimal mood
+POST {{baseUrl}}/journal
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "date": "2026-08-15",
+  "generalMood": 3.5,
+  "energyLevel": 4,
+  "sleepQuality": 3,
+  "stressLevel": 2,
+  "activityIds": [],
+  "keyEvents": "Test entry."
+}
+
+
+### Create - missing key events
+POST {{baseUrl}}/journal
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "date": "2026-08-15",
+  "generalMood": 4,
+  "energyLevel": 4,
+  "sleepQuality": 3,
+  "stressLevel": 2,
+  "activityIds": []
+}
+
+
+### Create - empty key events
+POST {{baseUrl}}/journal
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "date": "2026-08-15",
+  "generalMood": 4,
+  "energyLevel": 4,
+  "sleepQuality": 3,
+  "stressLevel": 2,
+  "activityIds": [],
+  "keyEvents": "   "
+}
+
+
+### Create - invalid activity UUID
+POST {{baseUrl}}/journal
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "date": "2026-08-15",
+  "generalMood": 4,
+  "energyLevel": 4,
+  "sleepQuality": 3,
+  "stressLevel": 2,
+  "activityIds": ["not-a-uuid"],
+  "keyEvents": "Test entry."
+}
+
+
+### Create - nonexistent activity
+POST {{baseUrl}}/journal
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "date": "2026-08-15",
+  "generalMood": 4,
+  "energyLevel": 4,
+  "sleepQuality": 3,
+  "stressLevel": 2,
+  "activityIds": ["00000000-0000-0000-0000-000000000000"],
+  "keyEvents": "Test entry."
+}
+
+
+### Create - duplicate date
+POST {{baseUrl}}/journal
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "date": "2026-08-15",
+  "generalMood": 5,
+  "energyLevel": 5,
+  "sleepQuality": 5,
+  "stressLevel": 1,
+  "activityIds": [],
+  "keyEvents": "This should fail because an entry already exists."
+}
+
+
+### Create - missing fields
+POST {{baseUrl}}/journal
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{}

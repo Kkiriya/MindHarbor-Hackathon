@@ -9,17 +9,25 @@ body {
     background-color: var(--color-background);
     color: var(--color-text);
     font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+}
 
-    /* So the footer will be always bottom of the pages.*/
+html, body, #root {
+    height: 100%;
+}
+
+#root {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
-/* So the footer will be always bottom of the pages.*/
-html, body {
-    height: 100%;
-}
-/* So the footer will always stay at the bottom of the pages. */
-.pageContent {
+
+main {
     flex: 1;
+}
+
+h1,
+h2,
+h3 {
+    line-height: 1.25;
 }

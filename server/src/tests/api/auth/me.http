@@ -1,0 +1,24 @@
+@baseUrl = http://localhost:5173/api/v1
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJmZDU1ZjQ3LThkMjctNDZkYy04NzI0LWMxZWQ4ZTgwMTUxZiIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzg2ODIzNTEzLCJleHAiOjE3ODY4MjQ0MTN9.hgUg-raK8KHnoVI6x1GM_nXBIXHsyhQziOAWy73v4Jk
+
+### ============================================================
+### GET CURRENT USER
+### ============================================================
+
+### Get current user - valid token
+GET {{baseUrl}}/auth/me
+Authorization: Bearer {{accessToken}}
+
+
+### Get current user - missing token
+GET {{baseUrl}}/auth/me
+
+
+### Get current user - invalid token
+GET {{baseUrl}}/auth/me
+Authorization: Bearer this-is-not-a-valid-token
+
+
+### Get current user - malformed authorization header
+GET {{baseUrl}}/auth/me
+Authorization: InvalidFormat {{accessToken}}
