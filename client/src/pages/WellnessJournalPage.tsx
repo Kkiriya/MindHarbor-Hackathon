@@ -32,6 +32,9 @@ export default function WellnessJournalPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [activities, setActivities] = useState<Activity[]>([]);
+    const [entriesRefresh, setEntriesRefresh] = useState(0);
+    const [saveMessage, setSaveMessage] = useState("");
+    const [saveError, setSaveError] = useState("");
 
     useEffect(() => {
         async function loadPreviousEntries() {
@@ -64,7 +67,7 @@ export default function WellnessJournalPage() {
         }
 
         loadPreviousEntries();
-    }, [token, currentPage]);
+    }, [token, currentPage, entriesRefresh]);
 
     function handlePreviousPage() {
         setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
@@ -141,13 +144,49 @@ export default function WellnessJournalPage() {
         }));
     }
 
-    function handleSave() {
-        const newEntry: JournalEntry = {
-            journalId: crypto.randomUUID(),
-            date: new Date().toISOString(),
-            ...journalData,
-        };
-        console.log("Données du journal à enregistrer :", newEntry);
+    async function handleSave() {
+        setSaveMessage("");
+        setSaveError("");
+
+        if (!token) {
+            setSaveError("You must be logged in to save your journal.");
+            return;
+        }
+
+        try {
+            const today = new Date();
+            const localDate = [
+                today.getFullYear(),
+                String(today.getMonth() + 1).padStart(2, "0"),
+                String(today.getDate()).padStart(2, "0"),
+            ].join("-");
+
+            const response = await axios.post(
+                "http://localhost:3000/api/v1/journal",
+                {
+                    date: localDate,
+                    ...journalData,
+                    activityIds: selectedActivitiesId,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            console.log("Journal entry saved:", response.data);
+            setSaveMessage("Journal entry saved successfully.");
+            setCurrentPage(1);
+            setEntriesRefresh((currentValue) => currentValue + 1);
+        } catch (error) {
+            console.error("Error saving journal entry:", error);
+            const serverMessage = axios.isAxiosError(error)
+                ? error.response?.data?.error?.message
+                : undefined;
+
+            setSaveError(serverMessage ?? "Unable to save the journal entry.");
+        }
     }
 
     return (
@@ -179,6 +218,18 @@ export default function WellnessJournalPage() {
             />
 
             <button type="button" onClick={handleSave}>Enregistrer</button>
+
+            {saveMessage && (
+                <p className={styles.successMessage} role="status">
+                    {saveMessage}
+                </p>
+            )}
+
+            {saveError && (
+                <p className={styles.errorMessage} role="alert">
+                    {saveError}
+                </p>
+            )}
 
             <PreviousEntries
                 entries={previousEntries}
