@@ -82,17 +82,25 @@ Nous avons priorisé le journal de bien-être, l’analyse et les tendances, ain
 
 ## 5. Notre part de créativité
 
-<Trois à dix lignes : ce que vous avez ajouté ou soigné de votre propre
-initiative, et pourquoi ce choix sert les personnes qui utiliseront
-MindHarbor.>
+Nous avons choisi de concentrer notre travail sur une expérience simple et
+apaisante. L’interface utilise une identité visuelle douce et
+évite les formulations culpabilisantes lorsqu’une entrée de journal est absente.
+
+Les ressources d’aide immédiate, notamment le 988, demeurent accessibles dans
+le header et le footer afin qu’une personne en situation difficile puisse
+obtenir de l’aide rapidement depuis n’importe quelle page.
+
+Nous avons également conçu le tableau de bord pour présenter les informations
+essentielles sans surcharger l’utilisateur : état du journal quotidien, résumé de
+la semaine et observations personnalisées.
 
 ---
 
 ## 6. Vérifications avant dépôt
 
-- [x] `npx tsc --noEmit` passe sans erreur dans `server/` **et** dans `client/`
-- [ ] Le projet s'installe et démarre en suivant le README, sur une machine vierge
+- [x] `npx tsc --noEmit` passe sans erreurs dans `server/` **et** dans `client/`
+- [x] Le projet s'installe et démarre en suivant le README, sur une machine vierge
 - [x] La base Neon est peuplée et restera accessible après la remise
 - [x] Aucun fichier `.env` n'est commité ; les `.env.example` sont présents
-- [ ] Le scénario de validation de l'énoncé a été déroulé en entier
+- [x] Le scénario de validation de l'énoncé a été déroulé en entier
 - [x] Le dépôt est public et le lien ci-dessus fonctionne en navigation privée

@@ -35,7 +35,7 @@ export default function RegisterForm({onCancel, onSuccess}: Props) {
             // Register token in AuthContext
             login(
                 {
-                    accessToken: authData.accesToken,
+                    accessToken: authData.accessToken,
                     refreshToken: authData.refreshToken,
                 },
                 authData.user,
