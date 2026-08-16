@@ -49,8 +49,8 @@ export const getJournalEntries: RequestHandler = async (req, res, next) => {
       );
     }
 
-    const { page, limit, sort, minMood, maxMood, range } =
-      req.query as unknown as JournalQuery;
+    const { page, limit, sort, minMood, maxMood, range } = res.locals
+      .valiudatedQuery as JournalQuery;
 
     const skip = (page - 1) * limit;
     const where = {
@@ -362,7 +362,7 @@ export const getJournalStats: RequestHandler = async (req, res, next) => {
         new AppError(401, "UNAUTHENTICATED", "Authentification requise."),
       );
     }
-    const { range } = req.query as unknown as StatsQuery;
+    const { range } = res.locals.valiudatedQuery as StatsQuery;
     const startDate = getRangeStart(range);
     const entries = await prisma.journalEntry.findMany({
       where: {
