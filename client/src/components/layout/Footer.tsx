@@ -13,9 +13,9 @@ export default function Footer() {
                     <h3>Navigation</h3>
                     <nav>
                         <ul>
-                            <li><Link to="/personal-dashboard" className={styles.Link}>Tableau de bord</Link></li>
-                            <li><Link to="/wellness-journal" className={styles.Link}>Journal de bien-être</Link></li>
-                            <li><Link to="/analysis" className={styles.Link}>Analyse et tendances</Link></li>
+                            <li><Link to="/personal-dashboard">Tableau de bord</Link></li>
+                            <li><Link to="/wellness-journal">Journal de bien-être</Link></li>
+                            <li><Link to="/analysis">Analyse et tendances</Link></li>
                         </ul>
                     </nav>
                 </section>
@@ -31,7 +31,7 @@ export default function Footer() {
                         </li>
 
                         <li>
-                            <a href="https://suicide.ca/fr" target="_blank">
+                            <a href="https://suicide.ca/fr" target="_blank" rel="noreferrer">
                                 Suicide
                             </a>
                         </li>
@@ -56,6 +56,14 @@ export default function Footer() {
                             </a>
                         </li>
                     </ul>
+                </section>
+
+                <section className={styles.footerImageSection}>
+                    <img
+                        src="/mindharbor-footer.png"
+                        alt="Illustration MindHarbor"
+                        className={styles.footerImage}
+                    />
                 </section>
             </div>
 
