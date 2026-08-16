@@ -1,43 +1,75 @@
-.content{
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    width: 100%;
-}
-
 .header {
     position: sticky;
     top: 0;
-    z-index: 1000;
-    padding: 8px;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
+}
+
+.urgentSupport {
+    padding: 8px 16px;
+    text-align: center;
+    color: #0b3f40;
+    background-color: #c6f4f5;
+    font-size: 0.95rem;
+}
+
+.urgentSupport a {
+    color: #0a6c71;
+    font-weight: 600;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 20px;
+    align-items: center;
+    padding: 10px 16px;
     background-color: var(--color-primary);
-    backdrop-filter: blur(20px);
 }
 
 .logo {
-    grid-column: 1;
-    justify-self: start;
-    width: 160px;
+    width: 140px;
     height: auto;
 }
 
-.nav {
-    grid-column: 2;
-    justify-self: center;
+.nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.nav a {
+    color: var(--color-surface);
+    text-decoration: none;
+    font-size: 1rem;
+    border-bottom: 2px solid transparent;
+    padding-bottom: 2px;
+}
+
+.nav a:hover,
+.nav a:focus-visible {
+    border-bottom-color: var(--color-accent);
+}
+
+.activeLink {
+    font-weight: 700;
+    border-bottom-color: var(--color-accent) !important;
 }
 
 .authentication {
     position: relative;
     display: flex;
     align-items: center;
-    gap: 12px;
-    grid-column: 3;
-    justify-self: end;
+    gap: 8px;
     color: var(--color-surface);
 }
 
 .authentication button {
-    padding: 8px 12px;
+    padding: 8px 10px;
     color: var(--color-primary);
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
@@ -47,23 +79,21 @@
 
 .loginForm {
     position: absolute;
-    top: calc(100% + 12px);
+    top: calc(100% + 10px);
     right: 0;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    width: 280px;
-    padding: 16px;
+    gap: 10px;
+    width: min(280px, 90vw);
+    padding: 14px;
     color: var(--color-text);
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: 8px;
-    box-shadow: 0 8px 24px rgb(0 0 0 / 20%);
 }
 
 .loginForm label {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: 4px;
 }
 
@@ -75,40 +105,23 @@
 
 .loginError {
     margin: 0;
-    color: #b42318;
+    color: #991b1b;
 }
 
-.nav ul {
-    display: flex;
-    gap: 32px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.nav a {
-    color: var(--color-surface);
-    text-decoration: none;
-
-    border-bottom: 2px solid transparent;
-
-    transition:
-            color 0.2s ease,
-            border-color 0.2s ease;
-
-    /*The size will be x% of the viewport*/
-    font-size: 2.5vw;
-}
-
-/*Limits the font-size*/
-@media screen and (min-width: 601px){
-    .nav{
-        font-size: 30px;
+@media (max-width: 900px) {
+    .content {
+        grid-template-columns: 1fr;
+        justify-items: center;
     }
-}
 
-.nav a:hover,
-.nav a:focus-visible {
-    color: var(--color-accent-soft);
-    border-bottom-color: var(--color-accent);
+    .authentication {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .loginForm {
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+    }
 }

@@ -1,7 +1,8 @@
 import {useState} from "react";
 import type {FormEvent} from "react";
-import axios from "axios";
-import {useAuth} from "../../context/AuthContext.tsx";
+import {login as loginRequest, register as registerRequest} from "../../api/auth";
+import {useAuth} from "../../hooks/useAuth";
+import styles from "./RegisterForm.module.css";
 
 interface Props {
     onCancel: () => void;
@@ -26,30 +27,29 @@ export default function RegisterForm({onCancel, onSuccess}: Props) {
 
         try {
             //First request to register the user
-            await axios.post("http://localhost:3000/api/v1/auth/register",
-                {email, password, firstName, lastName, username}
-            );
+            await registerRequest({email, password, firstName, lastName, username});
 
             // The route register don't return a token, so we need to login the user after registration
-            const loginResponse = await axios.post(
-                "http://localhost:3000/api/v1/auth/login",
-                {email, password},
-            );
-
-            const {accesToken, user} = loginResponse.data.data;
+            const authData = await loginRequest({email, password});
 
             // Register token in AuthContext
-            login(accesToken, user)
+            login(
+                {
+                    accessToken: authData.accesToken,
+                    refreshToken: authData.refreshToken,
+                },
+                authData.user,
+            );
 
             onSuccess();
 
-        } catch (error) {
+        } catch {
             setError("Impossible de créer un compte avec ces informations.");
         }
     }
 
     return (
-        <form onSubmit={handleRegister}>
+        <form className={styles.registerForm} onSubmit={handleRegister}>
             <h2>Créer un compte</h2>
 
             <label>
@@ -116,16 +116,17 @@ export default function RegisterForm({onCancel, onSuccess}: Props) {
                 une majuscule et un chiffre.
             </small>
 
-            {error && <p>{error}</p>}
+            {error && <p className={styles.error}>{error}</p>}
 
-            <button type="submit">
-                Créer le compte
-            </button>
+            <div className={styles.actions}>
+                <button type="submit">
+                    Créer le compte
+                </button>
 
-            <button type="button" onClick={onCancel}>
-                Annuler
-            </button>
+                <button type="button" onClick={onCancel}>
+                    Annuler
+                </button>
+            </div>
         </form>
     );
 }
-

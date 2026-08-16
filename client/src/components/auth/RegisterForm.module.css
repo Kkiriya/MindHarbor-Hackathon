@@ -1,0 +1,49 @@
+.registerForm {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: min(300px, 92vw);
+    padding: 14px;
+    color: var(--color-text);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+}
+
+.registerForm h2 {
+    margin: 0;
+    color: var(--color-primary);
+    font-size: 1rem;
+}
+
+.registerForm label {
+    display: grid;
+    gap: 4px;
+}
+
+.registerForm input {
+    padding: 8px;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+}
+
+.error {
+    margin: 0;
+    color: #991b1b;
+}
+
+@media (max-width: 900px) {
+    .registerForm {
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+    }
+}
