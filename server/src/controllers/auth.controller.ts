@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 import { prisma } from "../lib/prisma.js";
 import { AppError } from "../middlewares/error.js";
 import { UserRole } from "../../generated/prisma/enums.js";
-import { tr } from "zod/locales";
 
 type RegisterBody = {
   email: string;
@@ -21,11 +20,6 @@ type LoginBody = {
 
 type RefreshBody = {
   refreshToken: string;
-};
-
-type AccessTokenPayload = {
-  id: string;
-  role: UserRole;
 };
 
 type RefreshTokenPayload = {
