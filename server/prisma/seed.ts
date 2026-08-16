@@ -512,13 +512,13 @@ async function main() {
     {
       userId: sophie.userId,
       groupId: anxietyGroup.groupId,
-      role: prismaEnums.GroupRole.MEMBRE,
+      role: prismaEnums.GroupRole.MODERATEUR,
       requestStatus: prismaEnums.GroupRequestStatus.ACCEPTEE,
     },
     {
       userId: thomas.userId,
       groupId: anxietyGroup.groupId,
-      role: prismaEnums.GroupRole.MEMBRE,
+      role: prismaEnums.GroupRole.MODERATEUR,
       requestStatus: prismaEnums.GroupRequestStatus.ACCEPTEE,
     },
     {
