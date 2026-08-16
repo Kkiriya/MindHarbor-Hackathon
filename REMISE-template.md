@@ -66,8 +66,19 @@ aucune
 
 ### Non terminé / limitations connues
 
-<Soyez honnêtes et précis. Une limitation déclarée coûte moins cher qu'une
-fonctionnalité qui plante à la correction.>
+# Fonctionnalités principales restantes
+
+Les fonctionnalités principales qui restent à implémenter sont les suivantes :
+
+- Ressources et exercices
+- Groupes de soutien
+- Messagerie privée et confidentialité des échanges
+- Profils et visibilité
+- Administration
+
+Elles sont toutes déjà implémentées au niveau de la base de données. Cependant, leur implémentation au niveau du backend et du frontend n’a pas encore été réalisée.
+
+Nous avons priorisé le journal de bien-être, l’analyse et les tendances, ainsi que le tableau de bord, car ce sont, selon nous, les fonctionnalités qui bénéficient le plus aux personnes dans le besoin.
 
 ---
 
@@ -86,4 +97,4 @@ MindHarbor.>
 - [ ] La base Neon est peuplée et restera accessible après la remise
 - [ ] Aucun fichier `.env` n'est commité ; les `.env.example` sont présents
 - [ ] Le scénario de validation de l'énoncé a été déroulé en entier
-- [ ] Le dépôt est public et le lien ci-dessus fonctionne en navigation privée
+- [x] Le dépôt est public et le lien ci-dessus fonctionne en navigation privée
