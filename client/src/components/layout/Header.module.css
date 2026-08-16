@@ -26,6 +26,58 @@
     justify-self: center;
 }
 
+.authentication {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    grid-column: 3;
+    justify-self: end;
+    color: var(--color-surface);
+}
+
+.authentication button {
+    padding: 8px 12px;
+    color: var(--color-primary);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.loginForm {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 280px;
+    padding: 16px;
+    color: var(--color-text);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgb(0 0 0 / 20%);
+}
+
+.loginForm label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.loginForm input {
+    padding: 8px;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+}
+
+.loginError {
+    margin: 0;
+    color: #b42318;
+}
+
 .nav ul {
     display: flex;
     gap: 32px;

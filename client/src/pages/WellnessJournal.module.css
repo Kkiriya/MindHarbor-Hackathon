@@ -4,3 +4,20 @@
     flex-direction: column;
     gap: 16px;
 }
+
+.successMessage,
+.errorMessage {
+    margin: 0;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.successMessage {
+    color: #166534;
+    background-color: #dcfce7;
+}
+
+.errorMessage {
+    color: #991b1b;
+    background-color: #fee2e2;
+}

@@ -7,6 +7,17 @@ export interface JournalEntryData {
     dailyGratitude: string;
 }
 
+export interface JournalEntry {
+    journalId: string;
+    date: string;
+    generalMood: number;
+    energyLevel: number;
+    sleepQuality: number;
+    stressLevel: number;
+    keyEvents: string;
+    dailyGratitude?: string;
+}
+
 export interface Activity {
     activityId: string;
     name: string;
