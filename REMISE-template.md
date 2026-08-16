@@ -92,9 +92,9 @@ MindHarbor.>
 
 ## 6. Vérifications avant dépôt
 
-- [ ] `npx tsc --noEmit` passe sans erreur dans `server/` **et** dans `client/`
+- [x] `npx tsc --noEmit` passe sans erreur dans `server/` **et** dans `client/`
 - [ ] Le projet s'installe et démarre en suivant le README, sur une machine vierge
-- [ ] La base Neon est peuplée et restera accessible après la remise
-- [ ] Aucun fichier `.env` n'est commité ; les `.env.example` sont présents
+- [x] La base Neon est peuplée et restera accessible après la remise
+- [x] Aucun fichier `.env` n'est commité ; les `.env.example` sont présents
 - [ ] Le scénario de validation de l'énoncé a été déroulé en entier
 - [x] Le dépôt est public et le lien ci-dessus fonctionne en navigation privée
