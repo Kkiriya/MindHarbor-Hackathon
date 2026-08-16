@@ -66,8 +66,6 @@ aucune
 
 ### Non terminé / limitations connues
 
-# Fonctionnalités principales restantes
-
 Les fonctionnalités principales qui restent à implémenter sont les suivantes :
 
 - Ressources et exercices

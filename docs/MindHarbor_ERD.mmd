@@ -1,167 +1,159 @@
 erDiagram
 
-    %% This mermaid diagram has been translated from my original dbml diagram with the help of chatGPT to allow us to display it dynamically in the README and the wikis
-
-    %% For a complete and torough ERD diagram please refer to the dbml one
-
     USER {
-        uuid userId PK
-        String email
+        UUID userId PK
+        String email UK
         String password
         UserRole role
-        String username
+        String username UK
         String firstName
         String lastName
         String avatarPictureUrl
         String bio
         UserVisibilityLevel visibilityLevel
         UserPrivateMessageLevel privateMessageLevel
-        datetime createdAt
-        datetime updatedAt
-    }
-
-    JOURNAL_ENTRY {
-        uuid journalId PK
-        uuid userId FK
-        int generalMood
-        int energyLevel
-        int sleepQuality
-        int stessLevel
-        String keyEvents
-        String dailyGratitude
-        date createdAt
-        datetime updatedAt
-    }
-
-    ACTIVITY {
-        uuid activityId PK
-        String name
-        String desc
-        datetime createdAt
-        datetime updatedAt
+        DateTime createdAt
+        DateTime updatedAt
     }
 
     RESOURCE {
-        uuid resourceId PK
-        String name
+        UUID resourceId PK
+        String name UK
         ResourceCategory category
         ResourceType type
-        float duration
-        int level
-        datetime createdAt
-        datetime updatedAt
+        Float duration
+        Int level
+        DateTime createdAt
+        DateTime updatedAt
+    }
+
+    ACTIVITY {
+        UUID activityId PK
+        String name UK
+        String desc
+        DateTime createdAt
+        DateTime updatedAt
+    }
+
+    JOURNAL_ENTRY {
+        UUID journalId PK
+        UUID userId FK
+        Date date
+        Int generalMood
+        Int energyLevel
+        Int sleepQuality
+        Int stressLevel
+        String keyEvents
+        String dailyGratitude
+        DateTime createdAt
+        DateTime updatedAt
+    }
+
+    JOURNAL_ACTIVITY {
+        UUID journalId PK, FK
+        UUID activityId PK, FK
     }
 
     GROUP {
-        uuid groupId PK
-        String name
+        UUID groupId PK
+        String name UK
         String theme
         String desc
         String rules
         GroupVisibility visibility
-        datetime createdAt
-        datetime updatedAt
-    }
-
-    POST {
-        uuid postId PK
-        uuid userId FK
-        uuid groupId FK
-        String title
-        String body
-        datetime createdAt
-        datetime updatedAt
-    }
-
-    COMMENT {
-        uuid commentId PK
-        uuid userId FK
-        uuid postId FK
-        String comment
-        datetime createdAt
-        datetime updatedAt
-    }
-
-    MESSAGE {
-        uuid messageId PK
-        uuid senderId FK
-        uuid recipientId FK
-        String message
-        MessageReadReceipt readReceipt
-        datetime createdAt
-        datetime updatedAt
-    }
-
-    REPORT {
-        uuid postId PK, FK
-        uuid userId PK, FK
-        ReportCategory category
-        ReportStatus status
-        datetime createdAt
-        datetime updatedAt
-    }
-
-    REFRESH_TOKEN {
-        uuid refreshTokenId PK
-        uuid userId FK
-        varchar tokenHash
-        datetime expiresAt
-        datetime createdAt
-        datetime revokedAt
-    }
-
-    JOURNAL_ACTIVITY {
-        uuid journalId PK, FK
-        uuid activityId PK, FK
-    }
-
-    FAVORITE {
-        uuid userId PK, FK
-        uuid resource PK, FK
-        datetime createdAt
+        DateTime createdAt
+        DateTime updatedAt
     }
 
     GROUP_MEMBER {
-        uuid userId PK, FK
-        uuid groupId PK, FK
+        UUID userId PK, FK
+        UUID groupId PK, FK
         GroupRole role
         GroupRequestStatus requestStatus
-        datetime createdAt
-        datetime updatedAt
+        DateTime createdAt
+        DateTime updatedAt
     }
 
+    POST {
+        UUID postId PK
+        UUID userId FK
+        UUID groupId FK
+        String title
+        String body
+        DateTime createdAt
+        DateTime updatedAt
+    }
 
-    %% User relationships
+    COMMENT {
+        UUID commentId PK
+        UUID userId FK
+        UUID postId FK
+        String comment
+        DateTime createdAt
+        DateTime updatedAt
+    }
+
+    MESSAGE {
+        UUID messageId PK
+        UUID senderId FK
+        UUID recipientId FK
+        String message
+        MessageReadReceipt readReceipt
+        DateTime createdAt
+        DateTime updatedAt
+    }
+
+    REPORT {
+        UUID reportId PK
+        UUID postId FK
+        UUID userId FK
+        ReportCategory category
+        ReportStatus status
+        DateTime createdAt
+        DateTime updatedAt
+    }
+
+    REFRESH_TOKEN {
+        UUID refreshTokenId PK
+        UUID userId FK
+        String tokenHash
+        DateTime expiresAt
+        DateTime createdAt
+        DateTime revokedAt
+        DateTime updatedAt
+    }
+
+    FAVORITE {
+        UUID userId PK, FK
+        UUID resourceId PK, FK
+        DateTime createdAt
+    }
+
+    %% =========================
+    %% RELATIONSHIPS
+    %% =========================
 
     USER ||--o{ JOURNAL_ENTRY : creates
-    USER ||--o{ POST : creates
-    USER ||--o{ COMMENT : writes
-    USER ||--o{ MESSAGE : sends
-    USER ||--o{ MESSAGE : receives
-    USER ||--o{ REPORT : creates
-    USER ||--o{ REFRESH_TOKEN : owns
-
-
-    %% Post and group relationships
-
-    GROUP ||--o{ POST : contains
-    POST ||--o{ COMMENT : has
-    POST ||--o{ REPORT : receives
-
-
-    %% Journal and activity relationships
 
     JOURNAL_ENTRY ||--o{ JOURNAL_ACTIVITY : contains
-    ACTIVITY ||--o{ JOURNAL_ACTIVITY : included_in
-
-
-    %% Favorite relationships
-
-    USER ||--o{ FAVORITE : favorites
-    RESOURCE ||--o{ FAVORITE : favorited_by
-
-
-    %% Group membership relationships
+    ACTIVITY ||--o{ JOURNAL_ACTIVITY : used_in
 
     USER ||--o{ GROUP_MEMBER : joins
-    GROUP ||--o{ GROUP_MEMBER : has_members
+    GROUP ||--o{ GROUP_MEMBER : has
+
+    USER ||--o{ POST : creates
+    GROUP ||--o{ POST : contains
+
+    POST ||--o{ COMMENT : has
+    USER ||--o{ COMMENT : writes
+
+    USER ||--o{ MESSAGE : sends
+    USER ||--o{ MESSAGE : receives
+
+    POST ||--o{ REPORT : has
+    USER ||--o{ REPORT : submits
+
+    USER ||--o{ REFRESH_TOKEN : owns
+
+    USER ||--o{ FAVORITE : creates
+    RESOURCE ||--o{ FAVORITE : contains
