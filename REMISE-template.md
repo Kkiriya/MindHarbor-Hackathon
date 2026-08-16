@@ -1,6 +1,7 @@
 # Remise — Hackathon MindHarbor
 
 > **Mode d'emploi (à supprimer avant de déposer)**
+>
 > 1. Renommez ce fichier en `REMISE.md`.
 > 2. Remplacez chaque valeur entre chevrons `<...>`. Supprimez les lignes de membres inutilisées.
 > 3. Commitez `REMISE.md` à la racine de votre dépôt.
@@ -24,11 +25,10 @@
 
 ## 2. Membres de l'équipe
 
-| # | Prénom   | Nom | Courriel          | Compte GitHub |
-|---|----------|-----|-------------------|---------------|
-| 1 | Jean-Simon | Cyr | jsimcyr@gmail.com | Jaska28       |
-| 2 | Émile | Valade | e.valade@proton.me        | Kkiriya      |
-
+| #   | Prénom     | Nom    | Courriel           | Compte GitHub |
+| --- | ---------- | ------ | ------------------ | ------------- |
+| 1   | Jean-Simon | Cyr    | jsimcyr@gmail.com  | Jaska28       |
+| 2   | Émile      | Valade | e.valade@proton.me | Kkiriya       |
 
 **Capitaine :** Aucun
 
@@ -36,12 +36,12 @@
 
 ## 3. Comptes de démonstration
 
-| Rôle | Courriel | Mot de passe | Particularité |
-|------|----------|--------------|---------------|
-| Administrateur | <courriel> | <mot de passe> | — |
-| Modérateur | <courriel> | <mot de passe> | modère le groupe <nom> |
-| Utilisateur | <courriel> | <mot de passe> | 30 jours de journal |
-| Utilisateur | <courriel> | <mot de passe> | profil privé |
+| Rôle           | Courriel                        | Mot de passe | Particularité                   |
+| -------------- | ------------------------------- | ------------ | ------------------------------- |
+| Administrateur | admin@mindharbor.com            | adminPswd    | Compte admin                    |
+| Modérateur     | thomas.gagnon@mindharbor.local  | User123      | modère le groupe <anxietyGroup> |
+| Utilisateur    | sophie.martin@mindharbor.local  | User123      | 30 jours de journal             |
+| Utilisateur    | lucas.tremblay@mindharbor.local | User123      | profil privé                    |
 
 ---
 
@@ -49,20 +49,20 @@
 
 ### Noyau obligatoire
 
-| Fonctionnalité | État | Remarque |
-|----------------|------|----------|
-| Journal de bien-être | complet / partiel / absent | |
-| Analyse et tendances | | |
-| Ressources et favoris | | |
-| Groupes de soutien | | |
-| Messagerie et confidentialité | | |
-| Profils et visibilité | | |
-| Tableau de bord | | |
-| Administration | | |
+| Fonctionnalité                | État                           | Remarque                                                                                                                                    |
+| ----------------------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Journal de bien-être          | **complet** / partiel / absent |                                                                                                                                             |
+| Analyse et tendances          | **complet** / partiel / absent |                                                                                                                                             |
+| Ressources et favoris         | complet / partiel / **absent** | toutes les features absente sont presentes dans la base de donnees il manques simplement leur implementation dans le backend et le frontend |
+| Groupes de soutien            | complet / partiel / **absent** |                                                                                                                                             |
+| Messagerie et confidentialité | complet / partiel / **absent** |                                                                                                                                             |
+| Profils et visibilité         | complet / partiel / **absent** |                                                                                                                                             |
+| Tableau de bord               | **complet** / partiel / absent |                                                                                                                                             |
+| Administration                | complet / partiel / **absent** |                                                                                                                                             |
 
 ### Extensions réalisées
 
-<liste, ou « aucune »>
+aucune
 
 ### Non terminé / limitations connues
 
