@@ -15,11 +15,21 @@ export interface JournalEntry {
     sleepQuality: number;
     stressLevel: number;
     keyEvents: string;
-    dailyGratitude?: string;
+    dailyGratitude: string | null;
 }
 
 export interface Activity {
     activityId: string;
     name: string;
-    desc: string;
+    desc: string | null;
+}
+
+export interface Paginated<T> {
+    data: T[];
+    meta: {
+        page: number;
+        limit: number;
+        total: number;
+        totalPages: number;
+    };
 }
