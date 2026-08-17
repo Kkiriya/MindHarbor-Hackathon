@@ -17,9 +17,9 @@
 ## 1. Dépôt GitHub
 
 - **URL (public) :** <https://github.com/Kkiriya/MindHarbor-Hackathon>
-- **Commit final à corriger :** <hash complet du commit>
+- **Commit final à corriger :** ec71c42c68da914c3b293ce360d8a23a4e685dfc
 - **Branche :** main
-- [ ] Vérifié en navigation privée : le dépôt est bien **PUBLIC**.
+- [x] Vérifié en navigation privée : le dépôt est bien **PUBLIC**.
 
 ---
 
